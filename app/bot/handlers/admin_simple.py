@@ -674,6 +674,270 @@ async def confirm_delete_scenario_handler(update: Update, context: ContextTypes.
         await query.edit_message_text("❌ Ошибка удаления сценария")
 
 
+async def edit_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик редактирования продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    try:
+        async with get_db_session() as session:
+            product_service = ProductService(session)
+            product = await product_service.get_product_by_id(product_id)
+            
+            if not product:
+                await query.edit_message_text("❌ Продукт не найден")
+                return
+            
+            product_type = product.type.value if hasattr(product.type, 'value') else product.type
+            
+            keyboard = [
+                [InlineKeyboardButton("📝 Изменить название", callback_data=f"edit_product_name_{product_id}")],
+                [InlineKeyboardButton("📄 Изменить описание", callback_data=f"edit_product_desc_{product_id}")],
+                [InlineKeyboardButton("💰 Изменить цену", callback_data=f"edit_product_price_{product_id}")],
+                [InlineKeyboardButton("🔗 Изменить ссылку", callback_data=f"edit_product_url_{product_id}")],
+                [InlineKeyboardButton("📋 Изменить текст оффера", callback_data=f"edit_product_offer_{product_id}")],
+                [InlineKeyboardButton("◀️ Назад", callback_data="admin_products")]
+            ]
+            
+            await query.edit_message_text(
+                f"✏️ <b>Редактирование продукта</b>\n\n"
+                f"<b>Название:</b> {product.name}\n"
+                f"<b>Описание:</b> {product.description or 'Не указано'}\n"
+                f"<b>Тип:</b> {product_type}\n"
+                f"<b>Цена:</b> {product.price/100} {product.currency}\n"
+                f"<b>Ссылка:</b> {product.payment_url or 'Не указана'}\n"
+                f"<b>Статус:</b> {'✅ Активен' if product.is_active else '❌ Неактивен'}\n\n"
+                f"Выберите, что хотите изменить:",
+                parse_mode="HTML",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+    except Exception as e:
+        logger.error(f"Ошибка редактирования продукта: {e}")
+        await query.edit_message_text("❌ Ошибка загрузки продукта")
+
+
+async def edit_product_name_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик изменения названия продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    context.user_data['action'] = 'edit_product_name'
+    context.user_data['product_id'] = product_id
+    
+    await query.edit_message_text(
+        "📝 <b>Изменение названия продукта</b>\n\n"
+        "Введите новое название продукта:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_product_{product_id}")
+        ]])
+    )
+
+
+async def edit_product_desc_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик изменения описания продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    context.user_data['action'] = 'edit_product_description'
+    context.user_data['product_id'] = product_id
+    
+    await query.edit_message_text(
+        "📄 <b>Изменение описания продукта</b>\n\n"
+        "Введите новое описание продукта:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_product_{product_id}")
+        ]])
+    )
+
+
+async def edit_product_price_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик изменения цены продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    context.user_data['action'] = 'edit_product_price'
+    context.user_data['product_id'] = product_id
+    
+    await query.edit_message_text(
+        "💰 <b>Изменение цены продукта</b>\n\n"
+        "Введите новую цену в рублях (например: 499 или 1990):",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_product_{product_id}")
+        ]])
+    )
+
+
+async def edit_product_url_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик изменения ссылки продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    context.user_data['action'] = 'edit_product_url'
+    context.user_data['product_id'] = product_id
+    
+    await query.edit_message_text(
+        "🔗 <b>Изменение ссылки на оплату</b>\n\n"
+        "Введите новую ссылку на страницу оплаты:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_product_{product_id}")
+        ]])
+    )
+
+
+async def edit_product_offer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик изменения текста оффера продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    context.user_data['action'] = 'edit_product_offer'
+    context.user_data['product_id'] = product_id
+    
+    await query.edit_message_text(
+        "📋 <b>Изменение текста оффера</b>\n\n"
+        "Введите новый текст оффера для продажи продукта:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_product_{product_id}")
+        ]])
+    )
+
+
+async def delete_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик удаления продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    try:
+        async with get_db_session() as session:
+            product_service = ProductService(session)
+            product = await product_service.get_product_by_id(product_id)
+            
+            if not product:
+                await query.edit_message_text("❌ Продукт не найден")
+                return
+            
+            await query.edit_message_text(
+                f"❓ <b>Подтверждение удаления</b>\n\n"
+                f"Вы действительно хотите удалить продукт <b>{product.name}</b>?\n\n"
+                f"⚠️ Это действие необратимо!",
+                parse_mode="HTML",
+                reply_markup=InlineKeyboardMarkup([
+                    [
+                        InlineKeyboardButton("✅ Да, удалить", callback_data=f"confirm_delete_product_{product_id}"),
+                        InlineKeyboardButton("❌ Отмена", callback_data="admin_products")
+                    ]
+                ])
+            )
+            
+    except Exception as e:
+        logger.error(f"Ошибка удаления продукта: {e}")
+        await query.edit_message_text("❌ Ошибка удаления продукта")
+
+
+async def confirm_delete_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик подтверждения удаления продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_id = query.data.split("_")[-1]
+    
+    try:
+        async with get_db_session() as session:
+            product_service = ProductService(session)
+            success = await product_service.delete_product(product_id)
+            
+            if success:
+                await query.edit_message_text(
+                    "✅ Продукт успешно удален",
+                    parse_mode="HTML",
+                    reply_markup=InlineKeyboardMarkup([[
+                        InlineKeyboardButton("◀️ Назад", callback_data="admin_products")
+                    ]])
+                )
+            else:
+                await query.edit_message_text(
+                    "❌ Не удалось удалить продукт",
+                    parse_mode="HTML",
+                    reply_markup=InlineKeyboardMarkup([[
+                        InlineKeyboardButton("◀️ Назад", callback_data="admin_products")
+                    ]])
+                )
+                
+    except Exception as e:
+        logger.error(f"Ошибка подтверждения удаления продукта: {e}")
+        await query.edit_message_text("❌ Ошибка удаления продукта")
+
+
+async def add_product_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик добавления нового продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    # Определяем типы продуктов
+    product_types = [
+        ("🎯 Трипвайер", "tripwire"),
+        ("📚 Курс", "course"),
+        ("💬 Консультация", "consultation"),
+        ("⭐ Основной продукт", "main_product"),
+        ("⬆️ Upsell", "upsell"),
+        ("⬇️ Downsell", "downsell")
+    ]
+    
+    context.user_data['action'] = 'add_product_step1'
+    
+    keyboard = [
+        [InlineKeyboardButton(name, callback_data=f"product_type_{p_type}")]
+        for name, p_type in product_types
+    ]
+    keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data="admin_products")])
+    
+    await query.edit_message_text(
+        "➕ <b>Добавление продукта</b>\n\n"
+        "Шаг 1 из 5: Выберите тип продукта:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
+
+
+async def product_type_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик выбора типа продукта."""
+    query = update.callback_query
+    await query.answer()
+    
+    product_type = query.data.split("_")[-1]
+    
+    context.user_data['product_type'] = product_type
+    context.user_data['action'] = 'add_product_step2'
+    
+    await query.edit_message_text(
+        "➕ <b>Добавление продукта</b>\n\n"
+        f"Тип: {product_type}\n\n"
+        "Шаг 2 из 5: Введите название продукта:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data="admin_products")
+        ]])
+    )
+
+
 async def edit_magnet_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик редактирования лид-магнита."""
     query = update.callback_query
@@ -1352,4 +1616,16 @@ edit_scenario_desc_callback = CallbackQueryHandler(edit_scenario_desc_handler, p
 list_scenario_msgs_callback = CallbackQueryHandler(list_scenario_msgs_handler, pattern="^list_scenario_msgs_")
 add_scenario_msg_callback = CallbackQueryHandler(add_scenario_msg_handler, pattern="^add_scenario_msg_")
 msg_type_callback = CallbackQueryHandler(msg_type_handler, pattern="^msg_type_")
+
+# Обработчики для продуктов
+edit_product_callback = CallbackQueryHandler(edit_product_handler, pattern="^edit_product_")
+delete_product_callback = CallbackQueryHandler(delete_product_handler, pattern="^delete_product_")
+confirm_delete_product_callback = CallbackQueryHandler(confirm_delete_product_handler, pattern="^confirm_delete_product_")
+edit_product_name_callback = CallbackQueryHandler(edit_product_name_handler, pattern="^edit_product_name_")
+edit_product_desc_callback = CallbackQueryHandler(edit_product_desc_handler, pattern="^edit_product_desc_")
+edit_product_price_callback = CallbackQueryHandler(edit_product_price_handler, pattern="^edit_product_price_")
+edit_product_url_callback = CallbackQueryHandler(edit_product_url_handler, pattern="^edit_product_url_")
+edit_product_offer_callback = CallbackQueryHandler(edit_product_offer_handler, pattern="^edit_product_offer_")
+add_product_callback = CallbackQueryHandler(add_product_handler, pattern="^add_product$")
+product_type_callback = CallbackQueryHandler(product_type_handler, pattern="^product_type_")
 

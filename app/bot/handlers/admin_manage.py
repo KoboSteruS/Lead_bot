@@ -107,6 +107,7 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         return
     
     text = message.text
+    action = context.user_data.get('action')
     
     try:
         # Редактирование рассылки - название
@@ -333,6 +334,219 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
                     "❌ Ошибка: введите число (порядковый номер)",
                     parse_mode="HTML"
                 )
+            return
+        
+        # Редактирование названия продукта
+        if action == 'edit_product_name':
+            product_id = context.user_data.get('product_id')
+            
+            async with get_db_session() as session:
+                from app.services.product_service import ProductService
+                product_service = ProductService(session)
+                
+                product = await product_service.get_product_by_id(product_id)
+                if product:
+                    product.name = text
+                    await session.commit()
+                    
+                    await message.reply_text(
+                        f"✅ Название продукта обновлено: {text}\n\n"
+                        f"Используйте /admin для возврата в меню.",
+                        parse_mode="HTML"
+                    )
+                else:
+                    await message.reply_text("❌ Продукт не найден", parse_mode="HTML")
+            
+            context.user_data.clear()
+            return
+        
+        # Редактирование описания продукта
+        if action == 'edit_product_description':
+            product_id = context.user_data.get('product_id')
+            
+            async with get_db_session() as session:
+                from app.services.product_service import ProductService
+                product_service = ProductService(session)
+                
+                product = await product_service.get_product_by_id(product_id)
+                if product:
+                    product.description = text
+                    await session.commit()
+                    
+                    await message.reply_text(
+                        f"✅ Описание продукта обновлено\n\n"
+                        f"Используйте /admin для возврата в меню.",
+                        parse_mode="HTML"
+                    )
+                else:
+                    await message.reply_text("❌ Продукт не найден", parse_mode="HTML")
+            
+            context.user_data.clear()
+            return
+        
+        # Редактирование цены продукта
+        if action == 'edit_product_price':
+            product_id = context.user_data.get('product_id')
+            
+            try:
+                price = float(text.replace(',', '.'))
+                price_kopeks = int(price * 100)
+                
+                async with get_db_session() as session:
+                    from app.services.product_service import ProductService
+                    product_service = ProductService(session)
+                    
+                    product = await product_service.get_product_by_id(product_id)
+                    if product:
+                        product.price = price_kopeks
+                        await session.commit()
+                        
+                        await message.reply_text(
+                            f"✅ Цена продукта обновлена: {price} руб.\n\n"
+                            f"Используйте /admin для возврата в меню.",
+                            parse_mode="HTML"
+                        )
+                    else:
+                        await message.reply_text("❌ Продукт не найден", parse_mode="HTML")
+                
+                context.user_data.clear()
+            except ValueError:
+                await message.reply_text(
+                    "❌ Ошибка: введите корректную цену (например: 499 или 1990.50)",
+                    parse_mode="HTML"
+                )
+            return
+        
+        # Редактирование ссылки продукта
+        if action == 'edit_product_url':
+            product_id = context.user_data.get('product_id')
+            
+            async with get_db_session() as session:
+                from app.services.product_service import ProductService
+                product_service = ProductService(session)
+                
+                product = await product_service.get_product_by_id(product_id)
+                if product:
+                    product.payment_url = text
+                    await session.commit()
+                    
+                    await message.reply_text(
+                        f"✅ Ссылка на оплату обновлена\n\n"
+                        f"Используйте /admin для возврата в меню.",
+                        parse_mode="HTML"
+                    )
+                else:
+                    await message.reply_text("❌ Продукт не найден", parse_mode="HTML")
+            
+            context.user_data.clear()
+            return
+        
+        # Редактирование текста оффера продукта
+        if action == 'edit_product_offer':
+            product_id = context.user_data.get('product_id')
+            
+            async with get_db_session() as session:
+                from app.services.product_service import ProductService
+                product_service = ProductService(session)
+                
+                product = await product_service.get_product_by_id(product_id)
+                if product:
+                    product.offer_text = text
+                    await session.commit()
+                    
+                    await message.reply_text(
+                        f"✅ Текст оффера обновлен\n\n"
+                        f"Используйте /admin для возврата в меню.",
+                        parse_mode="HTML"
+                    )
+                else:
+                    await message.reply_text("❌ Продукт не найден", parse_mode="HTML")
+            
+            context.user_data.clear()
+            return
+        
+        # Добавление продукта - шаг 2 (название)
+        if action == 'add_product_step2':
+            context.user_data['product_name'] = text
+            context.user_data['action'] = 'add_product_step3'
+            
+            await message.reply_text(
+                f"➕ <b>Добавление продукта</b>\n\n"
+                f"Шаг 3 из 5: Введите описание продукта:",
+                parse_mode="HTML"
+            )
+            return
+        
+        # Добавление продукта - шаг 3 (описание)
+        if action == 'add_product_step3':
+            context.user_data['product_description'] = text
+            context.user_data['action'] = 'add_product_step4'
+            
+            await message.reply_text(
+                f"➕ <b>Добавление продукта</b>\n\n"
+                f"Шаг 4 из 5: Введите цену в рублях (например: 499 или 1990):",
+                parse_mode="HTML"
+            )
+            return
+        
+        # Добавление продукта - шаг 4 (цена)
+        if action == 'add_product_step4':
+            try:
+                price = float(text.replace(',', '.'))
+                price_kopeks = int(price * 100)
+                context.user_data['product_price'] = price_kopeks
+                context.user_data['action'] = 'add_product_step5'
+                
+                await message.reply_text(
+                    f"➕ <b>Добавление продукта</b>\n\n"
+                    f"Шаг 5 из 5: Введите ссылку на страницу оплаты:",
+                    parse_mode="HTML"
+                )
+            except ValueError:
+                await message.reply_text(
+                    "❌ Ошибка: введите корректную цену (например: 499 или 1990.50)",
+                    parse_mode="HTML"
+                )
+            return
+        
+        # Добавление продукта - шаг 5 (ссылка)
+        if action == 'add_product_step5':
+            product_type = context.user_data.get('product_type')
+            product_name = context.user_data.get('product_name')
+            product_description = context.user_data.get('product_description')
+            product_price = context.user_data.get('product_price')
+            payment_url = text
+            
+            async with get_db_session() as session:
+                from app.services.product_service import ProductService
+                from app.models.product import Product
+                
+                product_service = ProductService(session)
+                
+                new_product = Product(
+                    name=product_name,
+                    description=product_description,
+                    type=product_type,
+                    price=product_price,
+                    currency="RUB",
+                    payment_url=payment_url,
+                    is_active=True,
+                    sort_order=999
+                )
+                
+                session.add(new_product)
+                await session.commit()
+                
+                await message.reply_text(
+                    f"✅ <b>Продукт создан!</b>\n\n"
+                    f"Название: {product_name}\n"
+                    f"Тип: {product_type}\n"
+                    f"Цена: {product_price/100} руб.\n\n"
+                    f"Используйте /admin для возврата в меню.",
+                    parse_mode="HTML"
+                )
+            
+            context.user_data.clear()
             return
         
         # Добавление лид-магнита

@@ -408,17 +408,25 @@ class ProductService:
             return []
     
     async def get_product_by_id(self, product_id: str) -> Optional[Product]:
-        """Получить продукт по ID."""
+        """Получить продукт по ID (поддерживает короткие UUID - первые 8 символов)."""
         try:
-            # Конвертируем строку в UUID если нужно
-            if isinstance(product_id, str):
-                product_id = UUID(product_id)
-                
-            stmt = (
-                select(Product)
-                .options(selectinload(Product.offers))
-                .where(Product.id == product_id)
-            )
+            # Если передан короткий UUID (8 символов), ищем по LIKE
+            if len(product_id) == 8:
+                from sqlalchemy import String, cast
+                stmt = (
+                    select(Product)
+                    .options(selectinload(Product.offers))
+                    .where(cast(Product.id, String).like(f"{product_id}%"))
+                )
+            else:
+                # Полный UUID
+                product_uuid = UUID(product_id) if isinstance(product_id, str) else product_id
+                stmt = (
+                    select(Product)
+                    .options(selectinload(Product.offers))
+                    .where(Product.id == product_uuid)
+                )
+            
             result = await self.session.execute(stmt)
             return result.scalar_one_or_none()
         except Exception as e:

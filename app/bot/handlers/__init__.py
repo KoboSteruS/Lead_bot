@@ -57,6 +57,16 @@ from .admin_simple import (
     list_scenario_msgs_callback,
     add_scenario_msg_callback,
     msg_type_callback,
+    edit_product_callback,
+    delete_product_callback,
+    confirm_delete_product_callback,
+    edit_product_name_callback,
+    edit_product_desc_callback,
+    edit_product_price_callback,
+    edit_product_url_callback,
+    edit_product_offer_callback,
+    add_product_callback,
+    product_type_callback,
 )
 from .admin_manage import (
     toggle_magnet_callback,
@@ -127,6 +137,16 @@ def register_handlers(application: Application) -> None:
     application.add_handler(list_scenario_msgs_callback)
     application.add_handler(add_scenario_msg_callback)
     application.add_handler(msg_type_callback)
+    application.add_handler(edit_product_callback)
+    application.add_handler(delete_product_callback)
+    application.add_handler(confirm_delete_product_callback)
+    application.add_handler(edit_product_name_callback)
+    application.add_handler(edit_product_desc_callback)
+    application.add_handler(edit_product_price_callback)
+    application.add_handler(edit_product_url_callback)
+    application.add_handler(edit_product_offer_callback)
+    application.add_handler(add_product_callback)
+    application.add_handler(product_type_callback)
     application.add_handler(admin_text_handler)  # Должен быть последним!
     
     # Текстовые обработчики для админ-панели
