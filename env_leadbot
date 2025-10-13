@@ -1,0 +1,49 @@
+# Настройки бота LeadBot
+BOT_TOKEN=8127947192:AAHRgmdbkh4nQtmu-DZpgKZul5tTPdARMRQ
+BOT_NAME=ОСНОВА P U T И - LeadBot
+BOT_DESCRIPTION=Бот для привлечения лидов и прогрева аудитории
+
+# Настройки базы данных
+DATABASE_URL=sqlite:///./lead_bot.db
+ECHO_SQL=False
+
+# Настройки канала/группы
+CHANNEL_ID=your_channel_id
+CHANNEL_USERNAME=your_channel_username
+GROUP_ID=your_group_id
+
+# Настройки админов (ВАЖНО!)
+# Список ID администраторов через запятую
+ADMIN_IDS=1670311707,123456789,987654321
+# ID супер-администратора (может управлять настройками)
+SUPER_ADMIN_ID=1670311707
+
+# Настройки лид-магнитов
+DEFAULT_LEAD_MAGNET_TYPE=text
+LEAD_MAGNET_SORT_ORDER=0
+
+# Настройки прогрева
+DEFAULT_WARMUP_DELAY_HOURS=24
+WARMUP_MESSAGE_ORDER=1
+
+# Настройки продуктов/трипвайеров
+DEFAULT_PRODUCT_TYPE=tripwire
+DEFAULT_CURRENCY=RUB
+DEFAULT_PRICE=990
+
+# Настройки логирования
+LOG_LEVEL=INFO
+LOG_FILE=logs/leadbot.log
+
+# Настройки разработки
+DEBUG=True
+TESTING=False
+
+# Настройки планировщика
+SCHEDULER_TIMEZONE=Europe/Moscow
+WARMUP_SCHEDULER_ENABLED=True
+LEAD_MAGNET_SCHEDULER_ENABLED=True
+
+# Настройки уведомлений
+NOTIFICATION_ENABLED=True
+ADMIN_NOTIFICATIONS=True
