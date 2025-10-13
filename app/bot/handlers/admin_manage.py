@@ -205,6 +205,136 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
             context.user_data.clear()
             return
         
+        # Редактирование названия сценария
+        if action == 'edit_scenario_name':
+            scenario_id = context.user_data.get('scenario_id')
+            
+            async with get_db_session() as session:
+                from app.services.warmup_service import WarmupService
+                warmup_service = WarmupService(session)
+                
+                scenario = await warmup_service.get_scenario_by_id(scenario_id)
+                if scenario:
+                    scenario.name = text
+                    await session.commit()
+                    
+                    await message.reply_text(
+                        f"✅ Название сценария обновлено: {text}\n\n"
+                        f"Используйте /admin для возврата в меню.",
+                        parse_mode="HTML"
+                    )
+                else:
+                    await message.reply_text("❌ Сценарий не найден", parse_mode="HTML")
+            
+            context.user_data.clear()
+            return
+        
+        # Редактирование описания сценария
+        if action == 'edit_scenario_description':
+            scenario_id = context.user_data.get('scenario_id')
+            
+            async with get_db_session() as session:
+                from app.services.warmup_service import WarmupService
+                warmup_service = WarmupService(session)
+                
+                scenario = await warmup_service.get_scenario_by_id(scenario_id)
+                if scenario:
+                    scenario.description = text
+                    await session.commit()
+                    
+                    await message.reply_text(
+                        f"✅ Описание сценария обновлено\n\n"
+                        f"Используйте /admin для возврата в меню.",
+                        parse_mode="HTML"
+                    )
+                else:
+                    await message.reply_text("❌ Сценарий не найден", parse_mode="HTML")
+            
+            context.user_data.clear()
+            return
+        
+        # Добавление сообщения в сценарий - шаг 2 (текст сообщения)
+        if action == 'add_scenario_message_step2':
+            context.user_data['message_text'] = text
+            context.user_data['action'] = 'add_scenario_message_step3'
+            
+            await message.reply_text(
+                f"➕ <b>Добавление сообщения</b>\n\n"
+                f"Шаг 3 из 4: Введите задержку в часах перед отправкой этого сообщения\n"
+                f"(например: 24 для отправки через сутки):",
+                parse_mode="HTML"
+            )
+            return
+        
+        # Добавление сообщения в сценарий - шаг 3 (задержка)
+        if action == 'add_scenario_message_step3':
+            try:
+                delay_hours = int(text)
+                context.user_data['delay_hours'] = delay_hours
+                context.user_data['action'] = 'add_scenario_message_step4'
+                
+                await message.reply_text(
+                    f"➕ <b>Добавление сообщения</b>\n\n"
+                    f"Шаг 4 из 4: Введите порядковый номер сообщения в сценарии\n"
+                    f"(например: 1 для первого сообщения):",
+                    parse_mode="HTML"
+                )
+            except ValueError:
+                await message.reply_text(
+                    "❌ Ошибка: введите число (количество часов)",
+                    parse_mode="HTML"
+                )
+            return
+        
+        # Добавление сообщения в сценарий - шаг 4 (порядок)
+        if action == 'add_scenario_message_step4':
+            try:
+                order = int(text)
+                scenario_id = context.user_data.get('scenario_id')
+                message_type = context.user_data.get('message_type')
+                message_text = context.user_data.get('message_text')
+                delay_hours = context.user_data.get('delay_hours')
+                
+                async with get_db_session() as session:
+                    from app.services.warmup_service import WarmupService
+                    from app.models.warmup import WarmupMessage
+                    
+                    warmup_service = WarmupService(session)
+                    scenario = await warmup_service.get_scenario_by_id(scenario_id)
+                    
+                    if scenario:
+                        new_message = WarmupMessage(
+                            scenario_id=scenario.id,
+                            message_type=message_type,
+                            text=message_text,
+                            delay_hours=delay_hours,
+                            order=order,
+                            is_active=True
+                        )
+                        
+                        session.add(new_message)
+                        await session.commit()
+                        
+                        await message.reply_text(
+                            f"✅ <b>Сообщение добавлено!</b>\n\n"
+                            f"Тип: {message_type}\n"
+                            f"Порядок: {order}\n"
+                            f"Задержка: {delay_hours}ч\n"
+                            f"Текст: {message_text[:100]}...\n\n"
+                            f"Используйте /admin для возврата в меню.",
+                            parse_mode="HTML"
+                        )
+                    else:
+                        await message.reply_text("❌ Сценарий не найден", parse_mode="HTML")
+                
+                context.user_data.clear()
+            except ValueError:
+                await message.reply_text(
+                    "❌ Ошибка: введите число (порядковый номер)",
+                    parse_mode="HTML"
+                )
+            return
+        
         # Добавление лид-магнита
         if context.user_data.get('adding_magnet'):
             await message.reply_text(

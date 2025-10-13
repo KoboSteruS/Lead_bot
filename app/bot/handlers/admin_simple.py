@@ -410,16 +410,198 @@ async def edit_scenario_handler(update: Update, context: ContextTypes.DEFAULT_TY
     
     scenario_id = query.data.split("_")[-1]
     
+    try:
+        async with get_db_session() as session:
+            warmup_service = WarmupService(session)
+            scenario = await warmup_service.get_scenario_by_id(scenario_id)
+            
+            if not scenario:
+                await query.edit_message_text("❌ Сценарий не найден")
+                return
+            
+            keyboard = [
+                [InlineKeyboardButton("📝 Изменить название", callback_data=f"edit_scenario_name_{scenario_id}")],
+                [InlineKeyboardButton("📄 Изменить описание", callback_data=f"edit_scenario_desc_{scenario_id}")],
+                [InlineKeyboardButton("➕ Добавить сообщение", callback_data=f"add_scenario_msg_{scenario_id}")],
+                [InlineKeyboardButton("📋 Список сообщений", callback_data=f"list_scenario_msgs_{scenario_id}")],
+                [InlineKeyboardButton("◀️ Назад", callback_data=f"view_scenario_{scenario_id}")]
+            ]
+            
+            await query.edit_message_text(
+                f"✏️ <b>Редактирование сценария</b>\n\n"
+                f"<b>Название:</b> {scenario.name}\n"
+                f"<b>Описание:</b> {scenario.description or 'Не указано'}\n"
+                f"<b>Сообщений:</b> {len(scenario.messages)}\n\n"
+                f"Выберите, что хотите изменить:",
+                parse_mode="HTML",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+    except Exception as e:
+        logger.error(f"Ошибка редактирования сценария: {e}")
+        await query.edit_message_text("❌ Ошибка загрузки сценария")
+
+
+async def edit_scenario_name_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик изменения названия сценария."""
+    query = update.callback_query
+    await query.answer()
+    
+    scenario_id = query.data.split("_")[-1]
+    
+    # Сохраняем контекст для обработки текста
+    context.user_data['action'] = 'edit_scenario_name'
+    context.user_data['scenario_id'] = scenario_id
+    
     await query.edit_message_text(
-        "⚠️ <b>Редактирование сценариев</b>\n\n"
-        "Функция редактирования сценариев в разработке.\n"
-        "Пока вы можете:\n"
-        "• Создать новый сценарий\n"
-        "• Удалить существующий\n"
-        "• Использовать скрипты для изменения",
+        "📝 <b>Изменение названия сценария</b>\n\n"
+        "Введите новое название сценария:",
         parse_mode="HTML",
         reply_markup=InlineKeyboardMarkup([[
-            InlineKeyboardButton("◀️ Назад", callback_data=f"view_scenario_{scenario_id}")
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_scenario_{scenario_id}")
+        ]])
+    )
+
+
+async def edit_scenario_desc_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик изменения описания сценария."""
+    query = update.callback_query
+    await query.answer()
+    
+    scenario_id = query.data.split("_")[-1]
+    
+    # Сохраняем контекст для обработки текста
+    context.user_data['action'] = 'edit_scenario_description'
+    context.user_data['scenario_id'] = scenario_id
+    
+    await query.edit_message_text(
+        "📄 <b>Изменение описания сценария</b>\n\n"
+        "Введите новое описание сценария:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_scenario_{scenario_id}")
+        ]])
+    )
+
+
+async def list_scenario_msgs_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик списка сообщений сценария."""
+    query = update.callback_query
+    await query.answer()
+    
+    scenario_id = query.data.split("_")[-1]
+    
+    try:
+        async with get_db_session() as session:
+            warmup_service = WarmupService(session)
+            scenario = await warmup_service.get_scenario_by_id(scenario_id)
+            
+            if not scenario:
+                await query.edit_message_text("❌ Сценарий не найден")
+                return
+            
+            if not scenario.messages:
+                await query.edit_message_text(
+                    "📋 <b>Список сообщений</b>\n\n"
+                    "В сценарии пока нет сообщений.\n"
+                    "Нажмите 'Добавить сообщение' для создания.",
+                    parse_mode="HTML",
+                    reply_markup=InlineKeyboardMarkup([[
+                        InlineKeyboardButton("◀️ Назад", callback_data=f"edit_scenario_{scenario_id}")
+                    ]])
+                )
+                return
+            
+            messages_text = f"📋 <b>Сообщения сценария: {scenario.name}</b>\n\n"
+            keyboard = []
+            
+            for msg in sorted(scenario.messages, key=lambda x: x.order):
+                msg_type = msg.message_type.value if hasattr(msg.message_type, 'value') else msg.message_type
+                msg_text_short = msg.text[:50] + "..." if len(msg.text) > 50 else msg.text
+                
+                messages_text += (
+                    f"<b>{msg.order}.</b> {msg_type}\n"
+                    f"   Задержка: {msg.delay_hours}ч\n"
+                    f"   Текст: {msg_text_short}\n\n"
+                )
+                
+                msg_id_short = str(msg.id)[:8]
+                keyboard.append([
+                    InlineKeyboardButton(
+                        f"✏️ Редактировать {msg.order}", 
+                        callback_data=f"edit_msg_{msg_id_short}"
+                    ),
+                    InlineKeyboardButton(
+                        f"🗑 Удалить {msg.order}", 
+                        callback_data=f"delete_msg_{msg_id_short}"
+                    )
+                ])
+            
+            keyboard.append([InlineKeyboardButton("◀️ Назад", callback_data=f"edit_scenario_{scenario_id}")])
+            
+            await query.edit_message_text(
+                messages_text,
+                parse_mode="HTML",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+    except Exception as e:
+        logger.error(f"Ошибка списка сообщений: {e}")
+        await query.edit_message_text("❌ Ошибка загрузки сообщений")
+
+
+async def add_scenario_msg_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик добавления сообщения в сценарий."""
+    query = update.callback_query
+    await query.answer()
+    
+    scenario_id = query.data.split("_")[-1]
+    
+    # Сохраняем контекст
+    context.user_data['action'] = 'add_scenario_message_step1'
+    context.user_data['scenario_id'] = scenario_id
+    
+    # Определяем типы сообщений
+    message_types = [
+        ("🎉 Приветствие", "welcome"),
+        ("⚠️ Болевая точка", "pain_point"),
+        ("✨ Решение", "solution"),
+        ("⭐ Социальное доказательство", "social_proof"),
+        ("🎁 Оффер", "offer"),
+        ("📞 Дожим", "follow_up")
+    ]
+    
+    keyboard = [
+        [InlineKeyboardButton(name, callback_data=f"msg_type_{msg_type}")]
+        for name, msg_type in message_types
+    ]
+    keyboard.append([InlineKeyboardButton("❌ Отмена", callback_data=f"edit_scenario_{scenario_id}")])
+    
+    await query.edit_message_text(
+        "➕ <b>Добавление сообщения</b>\n\n"
+        "Шаг 1 из 4: Выберите тип сообщения:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
+
+
+async def msg_type_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик выбора типа сообщения."""
+    query = update.callback_query
+    await query.answer()
+    
+    msg_type = query.data.split("_")[-1]
+    scenario_id = context.user_data.get('scenario_id')
+    
+    # Сохраняем тип сообщения
+    context.user_data['message_type'] = msg_type
+    context.user_data['action'] = 'add_scenario_message_step2'
+    
+    await query.edit_message_text(
+        "➕ <b>Добавление сообщения</b>\n\n"
+        f"Тип: {msg_type}\n\n"
+        "Шаг 2 из 4: Введите текст сообщения:",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data=f"edit_scenario_{scenario_id}")
         ]])
     )
 
@@ -1165,4 +1347,9 @@ add_scenario_callback = CallbackQueryHandler(add_scenario_handler, pattern="^add
 edit_scenario_callback = CallbackQueryHandler(edit_scenario_handler, pattern="^edit_scenario_")
 delete_scenario_callback = CallbackQueryHandler(delete_scenario_handler, pattern="^delete_scenario_")
 confirm_delete_scenario_callback = CallbackQueryHandler(confirm_delete_scenario_handler, pattern="^confirm_delete_scenario_")
+edit_scenario_name_callback = CallbackQueryHandler(edit_scenario_name_handler, pattern="^edit_scenario_name_")
+edit_scenario_desc_callback = CallbackQueryHandler(edit_scenario_desc_handler, pattern="^edit_scenario_desc_")
+list_scenario_msgs_callback = CallbackQueryHandler(list_scenario_msgs_handler, pattern="^list_scenario_msgs_")
+add_scenario_msg_callback = CallbackQueryHandler(add_scenario_msg_handler, pattern="^add_scenario_msg_")
+msg_type_callback = CallbackQueryHandler(msg_type_handler, pattern="^msg_type_")
 

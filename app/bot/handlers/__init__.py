@@ -52,6 +52,11 @@ from .admin_simple import (
     edit_scenario_callback,
     delete_scenario_callback,
     confirm_delete_scenario_callback,
+    edit_scenario_name_callback,
+    edit_scenario_desc_callback,
+    list_scenario_msgs_callback,
+    add_scenario_msg_callback,
+    msg_type_callback,
 )
 from .admin_manage import (
     toggle_magnet_callback,
@@ -117,6 +122,11 @@ def register_handlers(application: Application) -> None:
     application.add_handler(edit_scenario_callback)
     application.add_handler(delete_scenario_callback)
     application.add_handler(confirm_delete_scenario_callback)
+    application.add_handler(edit_scenario_name_callback)
+    application.add_handler(edit_scenario_desc_callback)
+    application.add_handler(list_scenario_msgs_callback)
+    application.add_handler(add_scenario_msg_callback)
+    application.add_handler(msg_type_callback)
     application.add_handler(admin_text_handler)  # Должен быть последним!
     
     # Текстовые обработчики для админ-панели
