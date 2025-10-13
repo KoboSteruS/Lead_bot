@@ -113,32 +113,35 @@ def register_handlers(application: Application) -> None:
     application.add_handler(toggle_magnet_callback)
     application.add_handler(add_lead_magnet_callback)
     application.add_handler(edit_warmup_callback)
-    application.add_handler(edit_magnet_callback)
-    application.add_handler(delete_magnet_callback)
+    # Более специфичные паттерны лид-магнитов ПЕРЕД общими
     application.add_handler(confirm_delete_magnet_callback)
     application.add_handler(edit_magnet_name_callback)
     application.add_handler(edit_magnet_url_callback)
     application.add_handler(edit_magnet_desc_callback)
     application.add_handler(reset_all_lead_magnets_callback)
+    application.add_handler(edit_magnet_callback)
+    application.add_handler(delete_magnet_callback)
+    # Рассылки
     application.add_handler(admin_mailings_callback)
     application.add_handler(create_mailing_callback)
-    application.add_handler(send_mailing_callback)
+    # Более специфичные паттерны рассылок ПЕРЕД общими
+    application.add_handler(confirm_delete_mailing_callback)
     application.add_handler(resend_mailing_callback)
+    application.add_handler(send_mailing_callback)
     application.add_handler(edit_mailing_callback)
     application.add_handler(delete_mailing_callback)
-    application.add_handler(confirm_delete_mailing_callback)
     application.add_handler(view_scenario_callback)
     application.add_handler(add_scenario_callback)
-    application.add_handler(edit_scenario_callback)
-    application.add_handler(delete_scenario_callback)
+    # Более специфичные паттерны сценариев ПЕРЕД общими
     application.add_handler(confirm_delete_scenario_callback)
     application.add_handler(edit_scenario_name_callback)
     application.add_handler(edit_scenario_desc_callback)
     application.add_handler(list_scenario_msgs_callback)
     application.add_handler(add_scenario_msg_callback)
     application.add_handler(msg_type_callback)
-    application.add_handler(edit_product_callback)
-    application.add_handler(delete_product_callback)
+    application.add_handler(edit_scenario_callback)
+    application.add_handler(delete_scenario_callback)
+    # Более специфичные паттерны продуктов ПЕРЕД общими
     application.add_handler(confirm_delete_product_callback)
     application.add_handler(edit_product_name_callback)
     application.add_handler(edit_product_desc_callback)
@@ -147,6 +150,8 @@ def register_handlers(application: Application) -> None:
     application.add_handler(edit_product_offer_callback)
     application.add_handler(add_product_callback)
     application.add_handler(product_type_callback)
+    application.add_handler(edit_product_callback)
+    application.add_handler(delete_product_callback)
     application.add_handler(admin_text_handler)  # Должен быть последним!
     
     # Текстовые обработчики для админ-панели

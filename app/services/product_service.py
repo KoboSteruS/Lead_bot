@@ -468,16 +468,24 @@ class ProductService:
             return False
     
     async def delete_product(self, product_id: str) -> bool:
-        """Удалить продукт."""
+        """Удалить продукт (поддерживает короткие UUID)."""
         try:
-            # Конвертируем строку в UUID если нужно
-            if isinstance(product_id, str):
-                product_id = UUID(product_id)
-                
-            stmt = delete(Product).where(Product.id == product_id)
-            result = await self.session.execute(stmt)
+            # Сначала находим продукт (поддерживает короткие UUID)
+            product = await self.get_product_by_id(product_id)
+            if not product:
+                logger.warning(f"Продукт {product_id} не найден для удаления")
+                return False
+            
+            # Удаляем связанные офферы
+            for offer in product.offers:
+                await self.session.delete(offer)
+            
+            # Удаляем продукт
+            await self.session.delete(product)
             await self.session.commit()
-            return result.rowcount > 0
+            
+            logger.info(f"Продукт {product.name} успешно удален")
+            return True
         except Exception as e:
             await self.session.rollback()
             logger.error(f"Ошибка удаления продукта {product_id}: {e}")

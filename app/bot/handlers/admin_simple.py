@@ -427,18 +427,28 @@ async def edit_scenario_handler(update: Update, context: ContextTypes.DEFAULT_TY
                 [InlineKeyboardButton("◀️ Назад", callback_data=f"view_scenario_{scenario_id}")]
             ]
             
-            await query.edit_message_text(
-                f"✏️ <b>Редактирование сценария</b>\n\n"
-                f"<b>Название:</b> {scenario.name}\n"
-                f"<b>Описание:</b> {scenario.description or 'Не указано'}\n"
-                f"<b>Сообщений:</b> {len(scenario.messages)}\n\n"
-                f"Выберите, что хотите изменить:",
-                parse_mode="HTML",
-                reply_markup=InlineKeyboardMarkup(keyboard)
-            )
+            try:
+                await query.edit_message_text(
+                    f"✏️ <b>Редактирование сценария</b>\n\n"
+                    f"<b>Название:</b> {scenario.name}\n"
+                    f"<b>Описание:</b> {scenario.description or 'Не указано'}\n"
+                    f"<b>Сообщений:</b> {len(scenario.messages)}\n\n"
+                    f"Выберите, что хотите изменить:",
+                    parse_mode="HTML",
+                    reply_markup=InlineKeyboardMarkup(keyboard)
+                )
+            except Exception as edit_error:
+                # Если сообщение не изменилось, просто игнорируем
+                if "Message is not modified" in str(edit_error):
+                    pass
+                else:
+                    raise
     except Exception as e:
         logger.error(f"Ошибка редактирования сценария: {e}")
-        await query.edit_message_text("❌ Ошибка загрузки сценария")
+        try:
+            await query.edit_message_text("❌ Ошибка загрузки сценария")
+        except:
+            pass
 
 
 async def edit_scenario_name_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -701,21 +711,31 @@ async def edit_product_handler(update: Update, context: ContextTypes.DEFAULT_TYP
                 [InlineKeyboardButton("◀️ Назад", callback_data="admin_products")]
             ]
             
-            await query.edit_message_text(
-                f"✏️ <b>Редактирование продукта</b>\n\n"
-                f"<b>Название:</b> {product.name}\n"
-                f"<b>Описание:</b> {product.description or 'Не указано'}\n"
-                f"<b>Тип:</b> {product_type}\n"
-                f"<b>Цена:</b> {product.price/100} {product.currency}\n"
-                f"<b>Ссылка:</b> {product.payment_url or 'Не указана'}\n"
-                f"<b>Статус:</b> {'✅ Активен' if product.is_active else '❌ Неактивен'}\n\n"
-                f"Выберите, что хотите изменить:",
-                parse_mode="HTML",
-                reply_markup=InlineKeyboardMarkup(keyboard)
-            )
+            try:
+                await query.edit_message_text(
+                    f"✏️ <b>Редактирование продукта</b>\n\n"
+                    f"<b>Название:</b> {product.name}\n"
+                    f"<b>Описание:</b> {product.description or 'Не указано'}\n"
+                    f"<b>Тип:</b> {product_type}\n"
+                    f"<b>Цена:</b> {product.price/100} {product.currency}\n"
+                    f"<b>Ссылка:</b> {product.payment_url or 'Не указана'}\n"
+                    f"<b>Статус:</b> {'✅ Активен' if product.is_active else '❌ Неактивен'}\n\n"
+                    f"Выберите, что хотите изменить:",
+                    parse_mode="HTML",
+                    reply_markup=InlineKeyboardMarkup(keyboard)
+                )
+            except Exception as edit_error:
+                # Если сообщение не изменилось, просто игнорируем
+                if "Message is not modified" in str(edit_error):
+                    pass
+                else:
+                    raise
     except Exception as e:
         logger.error(f"Ошибка редактирования продукта: {e}")
-        await query.edit_message_text("❌ Ошибка загрузки продукта")
+        try:
+            await query.edit_message_text("❌ Ошибка загрузки продукта")
+        except:
+            pass
 
 
 async def edit_product_name_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
