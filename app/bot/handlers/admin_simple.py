@@ -28,8 +28,10 @@ async def admin_command_handler(update: Update, context: ContextTypes.DEFAULT_TY
     if not user:
         return
     
-    # Проверяем, является ли пользователь админом
-    if str(user.id) not in str(settings.ADMIN_IDS):
+    # Проверяем, является ли пользователь админом (проверяем и .env и БД)
+    from app.bot.utils import is_admin
+    
+    if not await is_admin(user.id):
         await update.message.reply_text(
             "❌ У вас нет прав администратора.",
             parse_mode="HTML"
@@ -43,7 +45,8 @@ async def admin_command_handler(update: Update, context: ContextTypes.DEFAULT_TY
         [InlineKeyboardButton("🎁 Лид-магниты", callback_data="admin_lead_magnets")],
         [InlineKeyboardButton("💰 Трипвайеры", callback_data="admin_products")],
         [InlineKeyboardButton("🔥 Прогрев", callback_data="admin_warmup")],
-        [InlineKeyboardButton("📢 Рассылки", callback_data="admin_mailings")]
+        [InlineKeyboardButton("📢 Рассылки", callback_data="admin_mailings")],
+        [InlineKeyboardButton("👨‍💼 Администраторы", callback_data="admin_admins")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -322,7 +325,8 @@ async def admin_back_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         [InlineKeyboardButton("🎁 Лид-магниты", callback_data="admin_lead_magnets")],
         [InlineKeyboardButton("💰 Трипвайеры", callback_data="admin_products")],
         [InlineKeyboardButton("🔥 Прогрев", callback_data="admin_warmup")],
-        [InlineKeyboardButton("📢 Рассылки", callback_data="admin_mailings")]
+        [InlineKeyboardButton("📢 Рассылки", callback_data="admin_mailings")],
+        [InlineKeyboardButton("👨‍💼 Администраторы", callback_data="admin_admins")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -1616,6 +1620,109 @@ async def confirm_delete_mailing_handler(update: Update, context: ContextTypes.D
         )
 
 
+async def admin_admins_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик раздела администраторов."""
+    query = update.callback_query
+    await query.answer()
+    
+    try:
+        async with get_db_session() as session:
+            from app.services.admin_service import AdminService
+            
+            admin_service = AdminService(session)
+            admins = await admin_service.get_all_admins()
+            
+            # Получаем также админов из .env
+            from config.settings import settings
+            env_admin_ids = settings.admin_ids_list
+            
+            admins_text = f"👨‍💼 <b>Администраторы:</b>\n\n"
+            
+            # Показываем админов из .env
+            if env_admin_ids:
+                admins_text += "📌 <b>Из .env файла (нельзя удалить):</b>\n"
+                for admin_id in env_admin_ids:
+                    admins_text += f"   • {admin_id}\n"
+                admins_text += "\n"
+            
+            # Показываем админов из БД
+            if admins:
+                admins_text += f"💾 <b>Из базы данных ({len(admins)}):</b>\n\n"
+                for admin in admins:
+                    status = "✅" if admin.is_active else "❌"
+                    username_str = f"@{admin.username}" if admin.username else "без username"
+                    name_str = admin.full_name or "Без имени"
+                    admins_text += (
+                        f"{status} <b>{name_str}</b>\n"
+                        f"   ID: <code>{admin.telegram_id}</code>\n"
+                        f"   Username: {username_str}\n\n"
+                    )
+            else:
+                admins_text += "💾 <b>База данных:</b> пусто\n\n"
+            
+            keyboard = [
+                [InlineKeyboardButton("➕ Добавить администратора", callback_data="add_admin")],
+                [InlineKeyboardButton("🗑 Удалить администратора", callback_data="remove_admin_select")],
+                [InlineKeyboardButton("🔄 Обновить", callback_data="admin_admins")],
+                [InlineKeyboardButton("◀️ Назад", callback_data="admin_back")]
+            ]
+            
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            
+            await query.edit_message_text(
+                admins_text,
+                parse_mode="HTML",
+                reply_markup=reply_markup
+            )
+            
+    except Exception as e:
+        logger.error(f"Ошибка получения администраторов: {e}")
+        await query.edit_message_text(
+            "❌ Ошибка получения администраторов",
+            parse_mode="HTML"
+        )
+
+
+async def add_admin_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик добавления администратора."""
+    query = update.callback_query
+    await query.answer()
+    
+    context.user_data['action'] = 'add_admin_telegram_id'
+    
+    await query.edit_message_text(
+        "➕ <b>Добавление администратора</b>\n\n"
+        "Введите Telegram ID пользователя, которого хотите сделать администратором:\n\n"
+        "<i>Например: 1670311707</i>\n\n"
+        "💡 <b>Как узнать Telegram ID:</b>\n"
+        "1. Напишите боту @userinfobot\n"
+        "2. Он пришлет ваш ID",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data="admin_admins")
+        ]])
+    )
+
+
+async def remove_admin_select_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик выбора админа для удаления."""
+    query = update.callback_query
+    await query.answer()
+    
+    context.user_data['action'] = 'remove_admin_telegram_id'
+    
+    await query.edit_message_text(
+        "🗑 <b>Удаление администратора</b>\n\n"
+        "Введите Telegram ID администратора, которого хотите удалить:\n\n"
+        "<i>Например: 1670311707</i>\n\n"
+        "⚠️ <b>Внимание:</b> Нельзя удалить админов из .env файла!",
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton("❌ Отмена", callback_data="admin_admins")
+        ]])
+    )
+
+
 # Обработчики для рассылок
 admin_mailings_callback = CallbackQueryHandler(admin_mailings_handler, pattern="^admin_mailings$")
 create_mailing_callback = CallbackQueryHandler(create_mailing_handler, pattern="^create_mailing$")
@@ -1624,6 +1731,11 @@ resend_mailing_callback = CallbackQueryHandler(resend_mailing_handler, pattern="
 edit_mailing_callback = CallbackQueryHandler(edit_mailing_handler, pattern="^edit_mailing_")
 delete_mailing_callback = CallbackQueryHandler(delete_mailing_handler, pattern="^delete_mailing_")
 confirm_delete_mailing_callback = CallbackQueryHandler(confirm_delete_mailing_handler, pattern="^confirm_delete_mailing_")
+
+# Обработчики для администраторов
+admin_admins_callback = CallbackQueryHandler(admin_admins_handler, pattern="^admin_admins$")
+add_admin_callback = CallbackQueryHandler(add_admin_handler, pattern="^add_admin$")
+remove_admin_select_callback = CallbackQueryHandler(remove_admin_select_handler, pattern="^remove_admin_select$")
 
 # Обработчики для сценариев прогрева
 view_scenario_callback = CallbackQueryHandler(view_scenario_handler, pattern="^view_scenario_")

@@ -759,6 +759,115 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
             
             context.user_data.clear()
             return
+        
+        # Добавление администратора
+        if action == 'add_admin_telegram_id':
+            try:
+                telegram_id = int(text.strip())
+                
+                async with get_db_session() as session:
+                    from app.services.admin_service import AdminService
+                    from app.services.user_service import UserService
+                    
+                    admin_service = AdminService(session)
+                    user_service = UserService(session)
+                    
+                    # Получаем информацию о пользователе если он есть в БД
+                    db_user = await user_service.get_user_by_telegram_id(telegram_id)
+                    
+                    username = None
+                    full_name = None
+                    
+                    if db_user:
+                        username = db_user.username
+                        full_name = db_user.full_name
+                    
+                    # Добавляем админа
+                    admin = await admin_service.add_admin(
+                        telegram_id=telegram_id,
+                        username=username,
+                        full_name=full_name,
+                        added_by_id=user.id
+                    )
+                    
+                    if admin:
+                        await message.reply_text(
+                            f"✅ <b>Администратор добавлен!</b>\n\n"
+                            f"Telegram ID: <code>{telegram_id}</code>\n"
+                            f"Username: {username or 'не указан'}\n"
+                            f"Имя: {full_name or 'не указано'}\n\n"
+                            f"Теперь пользователь может использовать команду /admin\n\n"
+                            f"Используйте /admin для возврата в меню.",
+                            parse_mode="HTML"
+                        )
+                    else:
+                        await message.reply_text(
+                            "❌ Ошибка добавления администратора",
+                            parse_mode="HTML"
+                        )
+                
+                context.user_data.clear()
+            except ValueError:
+                await message.reply_text(
+                    "❌ Ошибка: введите корректный Telegram ID (только цифры)\n\n"
+                    "Например: 1670311707",
+                    parse_mode="HTML"
+                )
+            return
+        
+        # Удаление администратора
+        if action == 'remove_admin_telegram_id':
+            try:
+                telegram_id = int(text.strip())
+                
+                # Проверяем, не пытается ли админ удалить сам себя
+                if telegram_id == user.id:
+                    await message.reply_text(
+                        "❌ Нельзя удалить самого себя!",
+                        parse_mode="HTML"
+                    )
+                    context.user_data.clear()
+                    return
+                
+                # Проверяем, не из .env ли этот админ
+                from config.settings import settings
+                if telegram_id in settings.admin_ids_list:
+                    await message.reply_text(
+                        "❌ Нельзя удалить администратора из .env файла!\n\n"
+                        "Для удаления измените файл .env на сервере.",
+                        parse_mode="HTML"
+                    )
+                    context.user_data.clear()
+                    return
+                
+                async with get_db_session() as session:
+                    from app.services.admin_service import AdminService
+                    
+                    admin_service = AdminService(session)
+                    success = await admin_service.remove_admin(telegram_id)
+                    
+                    if success:
+                        await message.reply_text(
+                            f"✅ <b>Администратор удален!</b>\n\n"
+                            f"Telegram ID: <code>{telegram_id}</code>\n\n"
+                            f"Пользователь больше не имеет доступа к админ-панели.\n\n"
+                            f"Используйте /admin для возврата в меню.",
+                            parse_mode="HTML"
+                        )
+                    else:
+                        await message.reply_text(
+                            "❌ Администратор не найден в базе данных",
+                            parse_mode="HTML"
+                        )
+                
+                context.user_data.clear()
+            except ValueError:
+                await message.reply_text(
+                    "❌ Ошибка: введите корректный Telegram ID (только цифры)\n\n"
+                    "Например: 1670311707",
+                    parse_mode="HTML"
+                )
+            return
             
     except Exception as e:
         logger.error(f"Ошибка обработки текстового ввода: {e}")

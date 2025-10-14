@@ -67,6 +67,9 @@ from .admin_simple import (
     edit_product_offer_callback,
     add_product_callback,
     product_type_callback,
+    admin_admins_callback,
+    add_admin_callback,
+    remove_admin_select_callback,
 )
 from .admin_manage import (
     toggle_magnet_callback,
@@ -154,6 +157,10 @@ def register_handlers(application: Application) -> None:
     application.add_handler(product_type_callback)
     application.add_handler(edit_product_callback)
     application.add_handler(delete_product_callback)
+    # Админы
+    application.add_handler(admin_admins_callback)
+    application.add_handler(add_admin_callback)
+    application.add_handler(remove_admin_select_callback)
     application.add_handler(admin_text_handler)  # Должен быть последним!
     
     # Обработчики файлов и текста для админ-панели

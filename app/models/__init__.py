@@ -12,6 +12,7 @@ from .warmup import (
 )
 from .mailing import Mailing, MailingRecipient, MailingStatus
 from .user_followup import UserFollowUp
+from .admin import Admin
 
 __all__ = [
     "BaseModel",
@@ -33,5 +34,6 @@ __all__ = [
     "Mailing",
     "MailingRecipient",
     "MailingStatus",
-    "UserFollowUp"
+    "UserFollowUp",
+    "Admin"
 ]
