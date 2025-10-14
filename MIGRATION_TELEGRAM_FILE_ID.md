@@ -9,14 +9,28 @@
 
 ## 🚀 Инструкция для миграции на сервере
 
-### Вариант 1: Автоматическая миграция (рекомендуется)
+### Вариант 1: Bash скрипт (САМЫЙ ПРОСТОЙ) ⭐
 
 ```bash
 cd ~/Lead_bot
-python scripts/add_telegram_file_id_column.py
+bash migrate.sh
 ```
 
-### Вариант 2: Ручная миграция через SQLite
+### Вариант 2: Python скрипт (без зависимостей)
+
+```bash
+cd ~/Lead_bot
+python3 scripts/migrate_add_telegram_file_id.py
+```
+
+### Вариант 3: Через SQL файл
+
+```bash
+cd ~/Lead_bot
+sqlite3 leadbot.db < migration.sql
+```
+
+### Вариант 4: Ручная миграция через SQLite
 
 ```bash
 cd ~/Lead_bot
@@ -27,16 +41,10 @@ ALTER TABLE lead_magnets ADD COLUMN telegram_file_id TEXT;
 .quit
 ```
 
-### Вариант 3: Через SQL скрипт
+### Вариант 5: Одной командой
 
 ```bash
-cd ~/Lead_bot
-sqlite3 leadbot.db < migration.sql
-```
-
-Содержимое `migration.sql`:
-```sql
-ALTER TABLE lead_magnets ADD COLUMN telegram_file_id TEXT;
+cd ~/Lead_bot && sqlite3 leadbot.db "ALTER TABLE lead_magnets ADD COLUMN telegram_file_id TEXT;"
 ```
 
 ## ✅ Проверка миграции
