@@ -1077,3 +1077,403 @@
 2025-10-14 00:13:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
 2025-10-14 00:13:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
 2025-10-14 00:13:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:14:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:14:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:14:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:15:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:15:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:15:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:16:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:16:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:16:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:17:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:17:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:17:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:18:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:18:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:18:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:19:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:19:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:19:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:19:21 | INFO     | __main__:main:23 - Запуск LeadBot...
+2025-10-14 00:19:21 | INFO     | __main__:main:24 - Название: ОСНОВА P U T И - LeadBot
+2025-10-14 00:19:21 | INFO     | __main__:main:25 - Режим отладки: False
+2025-10-14 00:19:21 | INFO     | app.core.database:init_database:86 - База данных успешно инициализирована
+2025-10-14 00:19:21 | INFO     | __main__:main:29 - База данных инициализирована
+2025-10-14 00:19:23 | INFO     | app.bot.bot:_setup_handlers:35 - Обработчики команд настроены
+2025-10-14 00:19:24 | INFO     | __main__:main:38 - Бот запущен: @OsnovaPuti_Lead_bot
+2025-10-14 00:19:24 | INFO     | app.core.database:init_database:86 - База данных успешно инициализирована
+2025-10-14 00:19:24 | INFO     | app.bot.bot:start:42 - База данных инициализирована
+2025-10-14 00:19:24 | INFO     | app.services.scheduler_service:start:41 - Планировщик задач запущен
+2025-10-14 00:19:24 | INFO     | app.bot.bot:start:47 - Планировщик задач запущен
+2025-10-14 00:19:24 | INFO     | app.bot.bot:start:50 - Запуск Telegram бота...
+2025-10-14 00:19:24 | INFO     | app.bot.bot:start:55 - Telegram бот успешно запущен
+2025-10-14 00:19:26 | INFO     | app.bot.bot:stop:72 - Остановка Telegram бота...
+2025-10-14 00:19:26 | INFO     | app.services.scheduler_service:stop:49 - Планировщик задач остановлен
+2025-10-14 00:19:28 | INFO     | __main__:main:51 - LeadBot остановлен
+2025-10-14 00:20:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:20:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:20:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:21:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:21:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:21:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:22:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:22:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:22:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:23:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:23:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:23:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:24:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:24:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:24:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:25:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:25:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:25:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:26:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:26:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:26:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:27:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:27:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:27:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:28:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:28:17 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:28:17 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:29:17 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:29:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:29:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:30:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:30:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:30:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:31:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:31:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:31:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:32:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:32:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:32:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:33:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:33:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:33:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:34:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:34:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:34:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:35:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:35:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:35:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:36:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:36:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:36:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:37:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:37:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:37:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:38:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:38:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:38:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:39:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:39:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:39:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:40:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:40:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:40:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:41:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:41:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:41:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:42:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:42:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:42:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:43:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:43:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:43:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:44:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:44:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:44:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:44:59 | INFO     | app.services.warmup_service:get_all_scenarios:367 - Получено 2 сценариев прогрева
+2025-10-14 00:44:59 | INFO     | app.services.warmup_service:get_active_warmup_users:405 - Получено 0 валидных активных прогрева
+2025-10-14 00:45:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:45:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:45:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:45:31 | INFO     | app.services.warmup_service:get_all_scenarios:367 - Получено 2 сценариев прогрева
+2025-10-14 00:45:31 | INFO     | app.services.warmup_service:get_active_warmup_users:405 - Получено 0 валидных активных прогрева
+2025-10-14 00:45:33 | INFO     | app.services.warmup_service:get_all_scenarios:367 - Получено 2 сценариев прогрева
+2025-10-14 00:45:33 | INFO     | app.services.warmup_service:get_active_warmup_users:405 - Получено 0 валидных активных прогрева
+2025-10-14 00:45:33 | ERROR    | app.core.database:get_db_session:73 - Ошибка в сессии базы данных: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-10-14 00:45:33 | ERROR    | app.bot.handlers.admin_simple:admin_warmup_handler:307 - Ошибка получения информации о прогреве: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-10-14 00:45:36 | INFO     | app.services.warmup_service:get_all_scenarios:367 - Получено 2 сценариев прогрева
+2025-10-14 00:45:36 | INFO     | app.services.warmup_service:get_active_warmup_users:405 - Получено 0 валидных активных прогрева
+2025-10-14 00:45:50 | INFO     | app.services.warmup_service:delete_scenario:493 - Удален сценарий прогрева: Основа Пути - Прогрев
+2025-10-14 00:45:55 | INFO     | app.services.warmup_service:get_all_scenarios:367 - Получено 1 сценариев прогрева
+2025-10-14 00:45:55 | INFO     | app.services.warmup_service:get_active_warmup_users:405 - Получено 0 валидных активных прогрева
+2025-10-14 00:45:58 | INFO     | app.services.warmup_service:delete_scenario:493 - Удален сценарий прогрева: Тестовый сценарий
+2025-10-14 00:46:01 | INFO     | app.services.warmup_service:get_all_scenarios:367 - Получено 0 сценариев прогрева
+2025-10-14 00:46:01 | INFO     | app.services.warmup_service:get_active_warmup_users:405 - Получено 0 валидных активных прогрева
+2025-10-14 00:46:06 | INFO     | app.services.lead_magnet_service:delete_lead_magnet:248 - Удален лид-магнит: 7-дневный трекер дисциплины и силы (PDF)
+2025-10-14 00:46:08 | INFO     | app.bot.handlers.admin_simple:admin_command_handler:57 - Админ-панель открыта пользователем 1670311707
+2025-10-14 00:46:16 | INFO     | app.services.mailing_service:delete_mailing:377 - Рассылка ТЕстовая удалена
+2025-10-14 00:46:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:46:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:46:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:46:24 | INFO     | app.services.mailing_service:delete_mailing:377 - Рассылка Тест удалена
+2025-10-14 00:46:35 | INFO     | app.services.mailing_service:delete_mailing:377 - Рассылка Тестовая удалена
+2025-10-14 00:47:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:47:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:47:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:48:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:48:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:48:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:49:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:49:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:49:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:50:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:50:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:50:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:51:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:51:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:51:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:52:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:52:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:52:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:53:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:53:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:53:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:54:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:54:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:54:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:55:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:55:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:55:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:56:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:56:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:56:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:57:18 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:57:18 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:57:18 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:58:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:58:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:58:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 00:59:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 00:59:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 00:59:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:00:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:00:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:00:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:01:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:01:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:01:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:02:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:02:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:02:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:03:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:03:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:03:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:04:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:04:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:04:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:05:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:05:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:05:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:06:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:06:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:06:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:07:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:07:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:07:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:08:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:08:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:08:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:09:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:09:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:09:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:10:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:10:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:10:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:11:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:11:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:11:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:12:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:12:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:12:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:13:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:13:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:13:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:14:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:14:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:14:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:15:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:15:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:15:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:16:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:16:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:16:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:17:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:17:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:17:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:18:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:18:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:18:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:19:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:19:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:19:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:20:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:20:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:20:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:21:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:21:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:21:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:22:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:22:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:22:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:23:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:23:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:23:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:24:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:24:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:24:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 01:25:19 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 01:25:19 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 01:25:19 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:52:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:52:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:52:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:53:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:53:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:53:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:54:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:54:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:54:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:55:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:55:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:55:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:56:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:56:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:56:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:57:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:57:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:57:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:58:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:58:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:58:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 07:59:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 07:59:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 07:59:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:00:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:00:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:00:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:01:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:01:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:01:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:02:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:02:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:02:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:03:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:03:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:03:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:04:35 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:04:35 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:04:35 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:05:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:05:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:05:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:06:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:06:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:06:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:07:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:07:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:07:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:08:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:08:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:08:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:09:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:09:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:09:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:10:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:10:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:10:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:11:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:11:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:11:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:12:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:12:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:12:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:13:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:13:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:13:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:14:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:14:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:14:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:15:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:15:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:15:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:16:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:16:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:16:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:17:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:17:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:17:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:18:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:18:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:18:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:19:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:19:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:19:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:20:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:20:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:20:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:21:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:21:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:21:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:22:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:22:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:22:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:23:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:23:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:23:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:24:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:24:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:24:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:25:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:25:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:25:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:26:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:26:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:26:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:27:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:27:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:27:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:28:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:28:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:28:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:29:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:29:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:29:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:30:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:30:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:30:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:31:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:31:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:31:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:32:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:32:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:32:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:33:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:33:36 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:33:36 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:34:36 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:34:37 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:34:37 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:35:37 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:35:37 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:35:37 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:36:37 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:36:37 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:36:37 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:37:37 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:37:37 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:37:37 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:38:37 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:38:37 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:38:37 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:39:37 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:39:37 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:39:37 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0
+2025-10-14 08:40:37 | INFO     | app.services.warmup_service:get_users_ready_for_next_message:179 - Найдено 0 пользователей готовых для следующего сообщения прогрева
+2025-10-14 08:40:37 | INFO     | app.services.followup_service:get_users_for_followup:71 - Найдено 0 пользователей для дожима
+2025-10-14 08:40:37 | INFO     | app.services.followup_service:send_followup_to_all_users:166 - Отправлено 0 дожимов из 0

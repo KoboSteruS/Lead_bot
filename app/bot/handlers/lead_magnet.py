@@ -96,31 +96,52 @@ async def get_gift_command_handler(update: Update, context: ContextTypes.DEFAULT
             if lead_magnet.message_text:
                 message_text += f"{lead_magnet.message_text}\n\n"
             
-            # Создаем клавиатуру в зависимости от типа лид-магнита
-            keyboard = []
-            
-            if lead_magnet.type == "pdf":
-                keyboard.append([
-                    InlineKeyboardButton("📄 Скачать PDF", url=lead_magnet.file_url)
-                ])
-            elif lead_magnet.type == "google_sheet":
-                keyboard.append([
-                    InlineKeyboardButton("📊 Открыть таблицу", url=lead_magnet.file_url)
-                ])
-            elif lead_magnet.type == "link":
-                keyboard.append([
-                    InlineKeyboardButton("🔗 Перейти по ссылке", url=lead_magnet.file_url)
-                ])
-            
-            # Подписка уже проверена, кнопку не добавляем
-            
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            
-            await update.message.reply_text(
-                message_text,
-                parse_mode="HTML",
-                reply_markup=reply_markup
-            )
+            # Если есть telegram_file_id, отправляем файл напрямую
+            if lead_magnet.telegram_file_id:
+                # Сначала отправляем текст
+                await update.message.reply_text(
+                    message_text,
+                    parse_mode="HTML"
+                )
+                # Затем отправляем файл
+                try:
+                    await update.message.reply_document(
+                        document=lead_magnet.telegram_file_id,
+                        caption=f"📄 {lead_magnet.name}"
+                    )
+                except Exception as file_error:
+                    logger.error(f"Ошибка отправки файла: {file_error}")
+                    # Если файл не отправился, отправляем ссылку (если есть)
+                    if lead_magnet.file_url:
+                        keyboard = [[InlineKeyboardButton("📄 Скачать файл", url=lead_magnet.file_url)]]
+                        await update.message.reply_text(
+                            "Или скачайте по ссылке:",
+                            reply_markup=InlineKeyboardMarkup(keyboard)
+                        )
+            else:
+                # Создаем клавиатуру для ссылок
+                keyboard = []
+                
+                if lead_magnet.type == "pdf" and lead_magnet.file_url:
+                    keyboard.append([
+                        InlineKeyboardButton("📄 Скачать PDF", url=lead_magnet.file_url)
+                    ])
+                elif lead_magnet.type == "google_sheet" and lead_magnet.file_url:
+                    keyboard.append([
+                        InlineKeyboardButton("📊 Открыть таблицу", url=lead_magnet.file_url)
+                    ])
+                elif lead_magnet.type == "link" and lead_magnet.file_url:
+                    keyboard.append([
+                        InlineKeyboardButton("🔗 Перейти по ссылке", url=lead_magnet.file_url)
+                    ])
+                
+                reply_markup = InlineKeyboardMarkup(keyboard) if keyboard else None
+                
+                await update.message.reply_text(
+                    message_text,
+                    parse_mode="HTML",
+                    reply_markup=reply_markup
+                )
             
             logger.info(f"Выдан лид-магнит пользователю {user.id}: {lead_magnet.name}")
             
@@ -214,31 +235,54 @@ async def gift_button_callback_handler(update: Update, context: ContextTypes.DEF
             if lead_magnet.message_text:
                 message_text += f"{lead_magnet.message_text}\n\n"
             
-            # Создаем клавиатуру в зависимости от типа лид-магнита
-            keyboard = []
-            
-            if lead_magnet.type == "pdf":
-                keyboard.append([
-                    InlineKeyboardButton("📄 Скачать PDF", url=lead_magnet.file_url)
-                ])
-            elif lead_magnet.type == "google_sheet":
-                keyboard.append([
-                    InlineKeyboardButton("📊 Открыть таблицу", url=lead_magnet.file_url)
-                ])
-            elif lead_magnet.type == "link":
-                keyboard.append([
-                    InlineKeyboardButton("🔗 Перейти по ссылке", url=lead_magnet.file_url)
-                ])
-            
-            # Подписка уже проверена, кнопку не добавляем
-            
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            
-            await query.edit_message_text(
-                message_text,
-                parse_mode="HTML",
-                reply_markup=reply_markup
-            )
+            # Если есть telegram_file_id, отправляем файл напрямую
+            if lead_magnet.telegram_file_id:
+                # Сначала редактируем сообщение
+                await query.edit_message_text(
+                    message_text,
+                    parse_mode="HTML"
+                )
+                # Затем отправляем файл
+                try:
+                    await context.bot.send_document(
+                        chat_id=query.message.chat_id,
+                        document=lead_magnet.telegram_file_id,
+                        caption=f"📄 {lead_magnet.name}"
+                    )
+                except Exception as file_error:
+                    logger.error(f"Ошибка отправки файла: {file_error}")
+                    # Если файл не отправился, отправляем ссылку (если есть)
+                    if lead_magnet.file_url:
+                        keyboard = [[InlineKeyboardButton("📄 Скачать файл", url=lead_magnet.file_url)]]
+                        await context.bot.send_message(
+                            chat_id=query.message.chat_id,
+                            text="Или скачайте по ссылке:",
+                            reply_markup=InlineKeyboardMarkup(keyboard)
+                        )
+            else:
+                # Создаем клавиатуру для ссылок
+                keyboard = []
+                
+                if lead_magnet.type == "pdf" and lead_magnet.file_url:
+                    keyboard.append([
+                        InlineKeyboardButton("📄 Скачать PDF", url=lead_magnet.file_url)
+                    ])
+                elif lead_magnet.type == "google_sheet" and lead_magnet.file_url:
+                    keyboard.append([
+                        InlineKeyboardButton("📊 Открыть таблицу", url=lead_magnet.file_url)
+                    ])
+                elif lead_magnet.type == "link" and lead_magnet.file_url:
+                    keyboard.append([
+                        InlineKeyboardButton("🔗 Перейти по ссылке", url=lead_magnet.file_url)
+                    ])
+                
+                reply_markup = InlineKeyboardMarkup(keyboard) if keyboard else None
+                
+                await query.edit_message_text(
+                    message_text,
+                    parse_mode="HTML",
+                    reply_markup=reply_markup
+                )
             
             logger.info(f"Выдан лид-магнит пользователю {user.id}: {lead_magnet.name}")
             

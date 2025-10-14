@@ -54,6 +54,13 @@ class LeadMagnet(BaseModel):
         doc="Ссылка на файл или ресурс"
     )
     
+    # ID файла в Telegram (для прямой отправки)
+    telegram_file_id: Mapped[str] = mapped_column(
+        Text,
+        nullable=True,
+        doc="ID файла в Telegram для прямой отправки"
+    )
+    
     # Текст для отправки
     message_text: Mapped[str] = mapped_column(
         Text,

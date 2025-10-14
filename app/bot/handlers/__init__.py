@@ -73,7 +73,9 @@ from .admin_manage import (
     add_lead_magnet_callback,
     edit_warmup_callback,
     admin_text_handler,
-    text_input_handler
+    text_input_handler,
+    file_handler,
+    file_input_handler
 )
 
 
@@ -154,7 +156,8 @@ def register_handlers(application: Application) -> None:
     application.add_handler(delete_product_callback)
     application.add_handler(admin_text_handler)  # Должен быть последним!
     
-    # Текстовые обработчики для админ-панели
+    # Обработчики файлов и текста для админ-панели
+    application.add_handler(file_handler)  # Обработчик файлов
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_input_handler))
 
 

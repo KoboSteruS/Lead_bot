@@ -551,20 +551,23 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         
         # Добавление лид-магнита
         if context.user_data.get('adding_magnet'):
-            await message.reply_text(
-                f"✅ Название сохранено: {text}\n\n"
-                f"Теперь отправьте URL файла (Google Sheets или PDF ссылку):",
-                parse_mode="HTML"
-            )
             context.user_data['magnet_name'] = text
             context.user_data['adding_magnet'] = False
-            context.user_data['adding_magnet_url'] = True
+            context.user_data['waiting_for_file_or_url'] = True
+            
+            await message.reply_text(
+                f"✅ Название сохранено: {text}\n\n"
+                f"Теперь отправьте:\n"
+                f"• <b>Файл</b> (PDF, документ) - просто прикрепите файл\n"
+                f"• <b>URL ссылку</b> (Google Sheets, внешняя ссылка) - напишите текстом\n\n"
+                f"Что вы хотите отправить?",
+                parse_mode="HTML"
+            )
             return
         
-        # URL лид-магнита
-        if context.user_data.get('adding_magnet_url'):
-            context.user_data['magnet_url'] = text
-            context.user_data['adding_magnet_url'] = False
+        # URL лид-магнита (когда отправляют текст ссылки)
+        if context.user_data.get('waiting_for_file_or_url'):
+            context.user_data['waiting_for_file_or_url'] = False
             
             # Определяем тип по URL
             if 'docs.google.com' in text:
@@ -581,6 +584,7 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
                     'name': context.user_data['magnet_name'],
                     'type': magnet_type,
                     'file_url': text,
+                    'telegram_file_id': None,
                     'is_active': True,
                     'sort_order': 999
                 }
@@ -591,7 +595,8 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
                     await message.reply_text(
                         f"✅ <b>Лид-магнит создан!</b>\n\n"
                         f"Название: {new_magnet.name}\n"
-                        f"Тип: {new_magnet.type}\n\n"
+                        f"Тип: {magnet_type}\n"
+                        f"Ссылка: {text}\n\n"
                         f"Используйте /admin для возврата в меню.",
                         parse_mode="HTML"
                     )
@@ -763,9 +768,104 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         )
 
 
+async def file_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик получения файлов для админки."""
+    user = update.effective_user
+    message = update.message
+    
+    # Проверка админа
+    from config.settings import settings
+    if user.id not in settings.admin_ids_list:
+        return
+    
+    try:
+        # Обработка файла для лид-магнита
+        if context.user_data.get('waiting_for_file_or_url'):
+            context.user_data['waiting_for_file_or_url'] = False
+            
+            # Получаем файл
+            file = None
+            file_name = None
+            magnet_type = LeadMagnetType.PDF
+            
+            if message.document:
+                file = message.document
+                file_name = file.file_name
+                # Определяем тип по расширению
+                if file_name.endswith('.pdf'):
+                    magnet_type = LeadMagnetType.PDF
+                else:
+                    magnet_type = LeadMagnetType.LINK
+            elif message.photo:
+                file = message.photo[-1]  # Берем самое большое фото
+                file_name = "photo.jpg"
+                magnet_type = LeadMagnetType.LINK
+            elif message.video:
+                file = message.video
+                file_name = "video.mp4"
+                magnet_type = LeadMagnetType.LINK
+            
+            if not file:
+                await message.reply_text(
+                    "❌ Не удалось получить файл. Попробуйте снова.",
+                    parse_mode="HTML"
+                )
+                context.user_data.clear()
+                return
+            
+            # Сохраняем file_id для отправки через Telegram
+            telegram_file_id = file.file_id
+            
+            async with get_db_session() as session:
+                from app.services.lead_magnet_service import LeadMagnetService
+                from app.models.lead_magnet import LeadMagnetType
+                
+                lead_magnet_service = LeadMagnetService(session)
+                
+                magnet_data = {
+                    'name': context.user_data['magnet_name'],
+                    'type': magnet_type,
+                    'file_url': None,  # Для файлов не используем URL
+                    'telegram_file_id': telegram_file_id,
+                    'is_active': True,
+                    'sort_order': 999
+                }
+                
+                new_magnet = await lead_magnet_service.create_lead_magnet(magnet_data)
+                
+                if new_magnet:
+                    await message.reply_text(
+                        f"✅ <b>Лид-магнит создан!</b>\n\n"
+                        f"Название: {new_magnet.name}\n"
+                        f"Тип: {magnet_type}\n"
+                        f"Файл: {file_name}\n"
+                        f"File ID: {telegram_file_id[:20]}...\n\n"
+                        f"Файл будет отправляться пользователям напрямую через Telegram.\n\n"
+                        f"Используйте /admin для возврата в меню.",
+                        parse_mode="HTML"
+                    )
+                else:
+                    await message.reply_text(
+                        "❌ Ошибка создания лид-магнита",
+                        parse_mode="HTML"
+                    )
+            
+            context.user_data.clear()
+            return
+            
+    except Exception as e:
+        logger.error(f"Ошибка обработки файла: {e}")
+        await message.reply_text(
+            "❌ Произошла ошибка при обработке файла. Попробуйте снова.",
+            parse_mode="HTML"
+        )
+        context.user_data.clear()
+
+
 # Создание обработчиков для регистрации
 toggle_magnet_callback = CallbackQueryHandler(toggle_magnet_status_handler, pattern="^toggle_magnet_")
 add_lead_magnet_callback = CallbackQueryHandler(add_lead_magnet_start, pattern="^add_lead_magnet$")
 edit_warmup_callback = CallbackQueryHandler(edit_warmup_message_handler, pattern="^edit_warmup_")
 admin_text_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, text_input_handler)
+file_handler = MessageHandler(filters.Document.ALL | filters.PHOTO | filters.VIDEO, file_input_handler)
 
