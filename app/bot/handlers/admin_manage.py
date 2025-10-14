@@ -779,6 +779,10 @@ async def file_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         return
     
     try:
+        # Импорты в начале функции
+        from app.services.lead_magnet_service import LeadMagnetService
+        from app.models.lead_magnet import LeadMagnetType
+        
         # Обработка файла для лид-магнита
         if context.user_data.get('waiting_for_file_or_url'):
             context.user_data['waiting_for_file_or_url'] = False
@@ -817,9 +821,6 @@ async def file_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
             telegram_file_id = file.file_id
             
             async with get_db_session() as session:
-                from app.services.lead_magnet_service import LeadMagnetService
-                from app.models.lead_magnet import LeadMagnetType
-                
                 lead_magnet_service = LeadMagnetService(session)
                 
                 magnet_data = {
