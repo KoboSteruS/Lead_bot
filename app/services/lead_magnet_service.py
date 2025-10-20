@@ -297,3 +297,26 @@ class LeadMagnetService:
         except Exception as e:
             logger.error(f"Ошибка получения лид-магнитов типа {magnet_type}: {e}")
             return []
+    
+    async def get_lead_magnets_issued_in_period(self, start_date: datetime, end_date: datetime, magnet_type: str = None) -> int:
+        """Получить количество выданных лид-магнитов за период."""
+        try:
+            from app.models.user_lead_magnet import UserLeadMagnet
+            
+            query = select(UserLeadMagnet).where(
+                and_(
+                    UserLeadMagnet.issued_at >= start_date,
+                    UserLeadMagnet.issued_at <= end_date
+                )
+            )
+            
+            if magnet_type:
+                # Подзапрос для получения ID лид-магнитов нужного типа
+                magnet_ids = select(LeadMagnet.id).where(LeadMagnet.type == magnet_type)
+                query = query.where(UserLeadMagnet.lead_magnet_id.in_(magnet_ids))
+            
+            result = await self.session.execute(query)
+            return len(result.scalars().all())
+        except Exception as e:
+            logger.error(f"Ошибка получения выданных лид-магнитов за период: {e}")
+            return 0

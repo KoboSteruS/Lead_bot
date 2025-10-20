@@ -711,3 +711,14 @@ class ProductService:
         except Exception as e:
             logger.error(f"Ошибка получения топ-офферов: {e}")
             return []
+    
+    async def get_sales_in_period(self, start_date: datetime, end_date: datetime) -> List[UserProductOffer]:
+        """Получить продажи за период."""
+        try:
+            # Здесь нужно будет добавить модель продаж, пока возвращаем пустой список
+            # В реальном проекте здесь был бы запрос к таблице продаж/платежей
+            logger.warning("Метод get_sales_in_period не реализован - нет модели продаж")
+            return []
+        except Exception as e:
+            logger.error(f"Ошибка получения продаж за период: {e}")
+            return []
