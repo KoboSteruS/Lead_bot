@@ -10,7 +10,7 @@ from loguru import logger
 import asyncio
 
 from app.core.database import get_db_session
-from app.services import UserService, LeadMagnetService, WarmupService, ProductService
+from app.services import UserService, LeadMagnetService, WarmupService, ProductService, MailingService
 from app.models.lead_magnet import LeadMagnetType
 from config.settings import settings
 
@@ -78,13 +78,22 @@ async def admin_stats_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
             active_warmups = len(await warmup_service.get_active_warmup_users())
             warmup_stats = await warmup_service.get_warmup_stats()
             
+            # Получаем статистику лид-магнитов
+            lead_magnet_stats = await lead_magnet_service.get_lead_magnet_stats()
+            
+            # Получаем статистику рассылок
+            mailing_stats = await MailingService(session).get_mailing_stats()
+            
             stats_text = (
                 "📊 <b>Статистика LeadBot</b>\n\n"
                 f"👥 <b>Пользователи:</b> {total_users}\n"
                 f"🎁 <b>Активные лид-магниты:</b> {active_lead_magnets}\n"
+                f"📤 <b>Выдано лид-магнитов:</b> {lead_magnet_stats.get('total_issued', 0)}\n"
                 f"🔥 <b>Активные прогревы:</b> {active_warmups}\n"
-                f"📈 <b>Всего сценариев прогрева:</b> {warmup_stats.get('total_scenarios', 0)}\n"
-                f"📝 <b>Всего сообщений прогрева:</b> {warmup_stats.get('total_messages', 0)}\n"
+                f"📈 <b>Сценариев прогрева:</b> {warmup_stats.get('total_scenarios', 0)}\n"
+                f"📝 <b>Сообщений прогрева:</b> {warmup_stats.get('total_messages', 0)}\n"
+                f"📢 <b>Рассылок создано:</b> {mailing_stats.get('total_mailings', 0)}\n"
+                f"📨 <b>Сообщений отправлено:</b> {mailing_stats.get('total_sent', 0)}\n"
             )
             
             keyboard = [
@@ -101,10 +110,14 @@ async def admin_stats_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
             
     except Exception as e:
         logger.error(f"Ошибка получения статистики: {e}")
-        await query.edit_message_text(
-            "❌ Ошибка получения статистики",
-            parse_mode="HTML"
-        )
+        try:
+            await query.edit_message_text(
+                "❌ Ошибка получения статистики",
+                parse_mode="HTML"
+            )
+        except Exception as edit_error:
+            logger.error(f"Ошибка редактирования сообщения: {edit_error}")
+            await query.answer("❌ Ошибка получения статистики")
 
 
 async def admin_users_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
