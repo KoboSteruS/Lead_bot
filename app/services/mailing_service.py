@@ -243,11 +243,8 @@ class MailingService:
             for recipient in recipients:
                 try:
                     # Получаем пользователя (конвертируем строку UUID в объект UUID)
-                    from uuid import UUID
-                    user_uuid = UUID(recipient.user_id) if isinstance(recipient.user_id, str) else recipient.user_id
-                    
                     user_result = await self.session.execute(
-                        select(User).where(User.id == user_uuid)
+                        select(User).where(User.id == recipient.user_id)
                     )
                     user = user_result.scalar_one_or_none()
                     

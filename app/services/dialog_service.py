@@ -43,7 +43,7 @@ class DialogService:
             # Создаем вопросы
             for question_data in dialog_data.questions:
                 question = DialogQuestion(
-                    dialog_id=dialog.id.hex,
+                    dialog_id=str(dialog.id),
                     question_text=question_data.question_text,
                     keywords=question_data.keywords,
                     is_active=question_data.is_active,
@@ -56,7 +56,7 @@ class DialogService:
                 # Создаем ответы
                 for answer_data in question_data.answers:
                     answer = DialogAnswer(
-                        question_id=question.id.hex,
+                        question_id=str(question.id),
                         answer_text=answer_data.answer_text,
                         answer_type=answer_data.answer_type,
                         additional_data=answer_data.additional_data,
@@ -130,12 +130,10 @@ class DialogService:
                     )
                 )
             else:
-                # Полный UUID
-                from uuid import UUID
-                dialog_uuid = UUID(dialog_id) if isinstance(dialog_id, str) else dialog_id
+                # Полный ID
                 stmt = (
                     select(Dialog)
-                    .where(Dialog.id == dialog_uuid)
+                    .where(Dialog.id == dialog_id)
                     .options(
                         selectinload(Dialog.questions).selectinload(DialogQuestion.answers)
                     )

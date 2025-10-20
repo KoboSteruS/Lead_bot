@@ -48,7 +48,7 @@ async def warmup_offer_callback_handler(update: Update, context: ContextTypes.DE
                 return
             
             # Получаем активный оффер для трипвайера
-            offer = await product_service.get_active_offer_for_product(tripwire.id.hex)
+            offer = await product_service.get_active_offer_for_product(str(tripwire.id))
             if not offer:
                 await query.edit_message_text(
                     "❌ Оффер временно недоступен. Обратитесь к администратору.",
@@ -57,15 +57,15 @@ async def warmup_offer_callback_handler(update: Update, context: ContextTypes.DE
                 return
             
             # Отмечаем показ оффера
-            await product_service.show_offer_to_user(str(db_user.id), offer.id.hex)
+            await product_service.show_offer_to_user(str(db_user.id), str(offer.id))
             
             # Формируем сообщение с офером
             price = offer.price if offer.price else tripwire.price
             price_rub = price / 100
             
             keyboard = [
-                [InlineKeyboardButton("💳 Оплатить картой", callback_data=f"payment_card_{tripwire.id.hex}")],
-                [InlineKeyboardButton("📱 СПБ (Faster Payments)", callback_data=f"payment_spb_{tripwire.id.hex}")],
+                [InlineKeyboardButton("💳 Оплатить картой", callback_data=f"payment_card_{str(tripwire.id)}")],
+                [InlineKeyboardButton("📱 СПБ (Faster Payments)", callback_data=f"payment_spb_{str(tripwire.id)}")],
                 [InlineKeyboardButton("🔗 Перейти на сайт оплаты", url=tripwire.payment_url)] if tripwire.payment_url else [],
                 [InlineKeyboardButton("🔙 Назад", callback_data="warmup_info")]
             ]

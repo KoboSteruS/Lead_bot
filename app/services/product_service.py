@@ -268,7 +268,7 @@ class ProductService:
             
             # Создаем основной оффер
             main_offer = ProductOffer(
-                product_id=product.id.hex,
+                product_id=str(product.id),
                 name="Основной оффер",
                 text=(
                     "🚀 <b>ПРОГРАММА «30 ДНЕЙ ПО КНИГЕ ХИЛЛА»</b>\n\n"
@@ -288,7 +288,7 @@ class ProductService:
             
             # Создаем оффер дожима
             followup_offer = ProductOffer(
-                product_id=product.id.hex,
+                product_id=str(product.id),
                 name="Дожим оффер",
                 text=(
                     "☕ <b>990 рублей — меньше, чем чашка кофе в день</b>\n\n"
@@ -419,12 +419,11 @@ class ProductService:
                     .where(cast(Product.id, String).like(f"{product_id}%"))
                 )
             else:
-                # Полный UUID
-                product_uuid = UUID(product_id) if isinstance(product_id, str) else product_id
+                # Полный ID
                 stmt = (
                     select(Product)
                     .options(selectinload(Product.offers))
-                    .where(Product.id == product_uuid)
+                    .where(Product.id == product_id)
                 )
             
             result = await self.session.execute(stmt)
@@ -452,7 +451,7 @@ class ProductService:
         try:
             # Конвертируем строку в UUID если нужно
             if isinstance(product_id, str):
-                product_id = UUID(product_id)
+                # product_id уже строка
                 
             stmt = (
                 update(Product)
@@ -514,7 +513,7 @@ class ProductService:
             if product_id:
                 # Конвертируем строку в UUID если нужно
                 if isinstance(product_id, str):
-                    product_id = UUID(product_id)
+                    # product_id уже строка
                 stmt = stmt.where(ProductOffer.product_id == product_id)
             
             stmt = stmt.order_by(ProductOffer.created_at.desc()).limit(limit)
@@ -529,7 +528,7 @@ class ProductService:
         try:
             # Конвертируем строку в UUID если нужно
             if isinstance(offer_id, str):
-                offer_id = UUID(offer_id)
+                # offer_id уже строка
                 
             stmt = (
                 select(ProductOffer)
@@ -561,7 +560,7 @@ class ProductService:
         try:
             # Конвертируем строку в UUID если нужно
             if isinstance(offer_id, str):
-                offer_id = UUID(offer_id)
+                # offer_id уже строка
                 
             stmt = (
                 update(ProductOffer)
@@ -581,7 +580,7 @@ class ProductService:
         try:
             # Конвертируем строку в UUID если нужно
             if isinstance(offer_id, str):
-                offer_id = UUID(offer_id)
+                # offer_id уже строка
                 
             stmt = delete(ProductOffer).where(ProductOffer.id == offer_id)
             result = await self.session.execute(stmt)

@@ -68,9 +68,9 @@ class UserService:
         """
         try:
             # Конвертируем строку в UUID для SQL запроса
-            uuid_obj = UUID(user_id) if isinstance(user_id, str) else user_id
+            # user_id уже строка
             result = await self.session.execute(
-                select(User).where(User.id == uuid_obj)
+                select(User).where(User.id == user_id)
             )
             return result.scalar_one_or_none()
         except Exception as e:
@@ -387,9 +387,9 @@ class UserService:
         """Удалить пользователя."""
         try:
             # Конвертируем строку в UUID для SQL запроса
-            uuid_obj = UUID(user_id) if isinstance(user_id, str) else user_id
+            # user_id уже строка
             result = await self.session.execute(
-                delete(User).where(User.id == uuid_obj)
+                delete(User).where(User.id == user_id)
             )
             await self.session.commit()
             return result.rowcount > 0

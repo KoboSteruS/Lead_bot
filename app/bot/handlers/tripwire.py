@@ -61,9 +61,9 @@ async def payment_card_callback_handler(update: Update, context: ContextTypes.DE
                 return
             
             # Отмечаем клик по офферу (если есть активный оффер)
-            offer = await product_service.get_active_offer_for_product(tripwire.id.hex)
+            offer = await product_service.get_active_offer_for_product(str(tripwire.id))
             if offer:
-                await product_service.mark_offer_clicked(str(db_user.id), offer.id.hex)
+                await product_service.mark_offer_clicked(str(db_user.id), str(offer.id))
             
             # Формируем сообщение с инструкцией по оплате
             payment_text = (
@@ -141,9 +141,9 @@ async def payment_spb_callback_handler(update: Update, context: ContextTypes.DEF
                 return
             
             # Отмечаем клик по офферу (если есть активный оффер)
-            offer = await product_service.get_active_offer_for_product(tripwire.id.hex)
+            offer = await product_service.get_active_offer_for_product(str(tripwire.id))
             if offer:
-                await product_service.mark_offer_clicked(str(db_user.id), offer.id.hex)
+                await product_service.mark_offer_clicked(str(db_user.id), str(offer.id))
             
             # Формируем сообщение с инструкцией по СБП
             payment_text = (

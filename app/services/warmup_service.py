@@ -75,7 +75,7 @@ class WarmupService:
             # Создаем запись прогрева для пользователя
             user_warmup = UserWarmup(
                 user_id=user_id,
-                scenario_id=scenario.id.hex,
+                scenario_id=str(scenario.id),
                 current_step=0,
                 started_at=datetime.utcnow(),
                 is_completed=False,
@@ -331,7 +331,7 @@ class WarmupService:
             # Добавляем сообщения
             for msg_data in messages:
                 message = WarmupMessage(
-                    scenario_id=scenario.id.hex,
+                    scenario_id=str(scenario.id),
                     message_type=msg_data["type"],
                     title=msg_data["title"],
                     text=msg_data["text"],
@@ -459,12 +459,10 @@ class WarmupService:
                     .options(selectinload(WarmupScenario.messages))
                 )
             else:
-                # Полный UUID
-                from uuid import UUID
-                scenario_uuid = UUID(scenario_id) if isinstance(scenario_id, str) else scenario_id
+                # Полный ID
                 stmt = (
                     select(WarmupScenario)
-                    .where(WarmupScenario.id == scenario_uuid)
+                    .where(WarmupScenario.id == scenario_id)
                     .options(selectinload(WarmupScenario.messages))
                 )
             

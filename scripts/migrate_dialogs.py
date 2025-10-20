@@ -26,9 +26,8 @@ async def create_dialog_tables():
         
         # Создаем таблицы
         async with engine.begin() as conn:
+            # Создаем все таблицы диалогов
             await conn.run_sync(Dialog.metadata.create_all)
-            await conn.run_sync(DialogQuestion.metadata.create_all)
-            await conn.run_sync(DialogAnswer.metadata.create_all)
         
         logger.info("✅ Таблицы диалогов созданы успешно!")
         
