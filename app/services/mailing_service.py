@@ -423,19 +423,3 @@ class MailingService:
         except Exception as e:
             logger.error(f"Ошибка получения количества пользователей: {e}")
             return 0
-    
-    async def get_mailings_in_period(self, start_date: datetime, end_date: datetime) -> List[Mailing]:
-        """Получить рассылки за период."""
-        try:
-            result = await self.session.execute(
-                select(Mailing).where(
-                    and_(
-                        Mailing.created_at >= start_date,
-                        Mailing.created_at <= end_date
-                    )
-                ).order_by(Mailing.created_at.desc())
-            )
-            return result.scalars().all()
-        except Exception as e:
-            logger.error(f"Ошибка получения рассылок за период: {e}")
-            return []

@@ -54,43 +54,21 @@ async def main():
 if __name__ == "__main__":
     # Настраиваем логирование
     logger.remove()
-    
-    # Консольный вывод
     logger.add(
         sys.stdout,
         level=settings.LOG_LEVEL,
-        format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-        colorize=True
+        format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
     )
     
-    # Файловый вывод
     if settings.LOG_FILE:
-        # Создаем папку для логов
-        log_dir = os.path.dirname(settings.LOG_FILE)
-        if log_dir:
-            os.makedirs(log_dir, exist_ok=True)
-        
+        os.makedirs(os.path.dirname(settings.LOG_FILE), exist_ok=True)
         logger.add(
             settings.LOG_FILE,
             level=settings.LOG_LEVEL,
             format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
             rotation="1 day",
-            retention="30 days",
-            compression="zip"
+            retention="30 days"
         )
-        
-        # Дополнительный файл для ошибок
-        error_log_file = settings.LOG_FILE.replace('.log', '_errors.log')
-        logger.add(
-            error_log_file,
-            level="ERROR",
-            format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
-            rotation="1 day",
-            retention="30 days",
-            compression="zip"
-        )
-    
-    logger.info("🚀 Запуск LeadBot...")
     
     # Запускаем бота
     asyncio.run(main())

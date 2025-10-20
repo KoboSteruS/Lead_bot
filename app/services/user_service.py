@@ -476,21 +476,3 @@ class UserService:
                 "total": 0, "active": 0, "inactive": 0, "banned": 0,
                 "new_today": 0, "new_week": 0, "new_month": 0, "activity_rate": 0
             }
-    
-    async def get_users_by_date_range(self, start_date: datetime, end_date: datetime) -> List[User]:
-        """Получить пользователей за период."""
-        try:
-            result = await self.session.execute(
-                select(User)
-                .where(
-                    and_(
-                        User.created_at >= start_date,
-                        User.created_at <= end_date
-                    )
-                )
-                .order_by(User.created_at.desc())
-            )
-            return result.scalars().all()
-        except Exception as e:
-            logger.error(f"Ошибка получения пользователей за период: {e}")
-            return []
