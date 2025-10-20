@@ -869,11 +869,186 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 )
             return
         
-        # Обработка создания диалогов - делегируем в dialog_text.py
+        # Обработка создания диалогов
         if action and action.startswith('creating_dialog'):
-            # Перенаправляем в dialog_admin_text_handler
-            from .dialog_text import dialog_admin_text_handler
-            await dialog_admin_text_handler(update, context)
+            # Обрабатываем создание диалога прямо здесь, чтобы использовать существующую сессию
+            from app.services.dialog_service import DialogService
+            from app.schemas.dialog import DialogCreate, DialogQuestionCreate, DialogAnswerCreate
+            
+            if action == 'creating_dialog':
+                dialog_name = text
+                context.user_data['dialog_data'] = {
+                    'name': dialog_name,
+                    'questions': [],
+                    'current_question': None
+                }
+                context.user_data['action'] = 'creating_dialog_description'
+                
+                await message.reply_text(
+                    f"✅ Название диалога: <b>{dialog_name}</b>\n\n"
+                    "📄 Отправьте описание диалога (или 'пропустить' для пропуска):",
+                    parse_mode="HTML"
+                )
+                return
+            
+            elif action == 'creating_dialog_description':
+                description = text.strip()
+                if description.lower() not in ['пропустить', 'skip', '']:
+                    context.user_data['dialog_data']['description'] = description
+                else:
+                    context.user_data['dialog_data']['description'] = None
+                
+                context.user_data['action'] = 'creating_dialog_question'
+                
+                await message.reply_text(
+                    "✅ Описание диалога сохранено\n\n"
+                    "❓ Отправьте первый вопрос для диалога:",
+                    parse_mode="HTML"
+                )
+                return
+            
+            elif action == 'creating_dialog_question':
+                question_text = text.strip()
+                if len(question_text) < 3:
+                    await message.reply_text("❌ Вопрос должен содержать минимум 3 символа. Попробуйте снова:")
+                    return
+                
+                context.user_data['dialog_data']['current_question'] = {
+                    'question_text': question_text,
+                    'answers': []
+                }
+                context.user_data['action'] = 'creating_dialog_question_keywords'
+                
+                await message.reply_text(
+                    f"✅ Вопрос: <b>{question_text}</b>\n\n"
+                    "🔑 Отправьте ключевые слова для поиска (через запятую) или 'пропустить':",
+                    parse_mode="HTML"
+                )
+                return
+            
+            elif action == 'creating_dialog_question_keywords':
+                keywords = text.strip()
+                if keywords.lower() not in ['пропустить', 'skip', '']:
+                    context.user_data['dialog_data']['current_question']['keywords'] = keywords
+                else:
+                    context.user_data['dialog_data']['current_question']['keywords'] = None
+                
+                context.user_data['action'] = 'creating_dialog_answer'
+                
+                await message.reply_text(
+                    "✅ Ключевые слова сохранены\n\n"
+                    "💬 Отправьте ответ на вопрос:",
+                    parse_mode="HTML"
+                )
+                return
+            
+            elif action == 'creating_dialog_answer':
+                answer_text = text.strip()
+                if len(answer_text) < 2:
+                    await message.reply_text("❌ Ответ должен содержать минимум 2 символа. Попробуйте снова:")
+                    return
+                
+                context.user_data['dialog_data']['current_question']['answers'].append({
+                    'answer_text': answer_text,
+                    'answer_type': 'text',
+                    'additional_data': None
+                })
+                context.user_data['action'] = 'creating_dialog_answer_type'
+                
+                await message.reply_text(
+                    f"✅ Ответ: <b>{answer_text}</b>\n\n"
+                    "📎 Выберите тип ответа:\n"
+                    "• <b>text</b> - обычный текст\n"
+                    "• <b>image</b> - с изображением\n"
+                    "• <b>document</b> - с документом\n\n"
+                    "Отправьте тип ответа:",
+                    parse_mode="HTML"
+                )
+                return
+            
+            elif action == 'creating_dialog_answer_type':
+                answer_type = text.strip().lower()
+                if answer_type not in ['text', 'image', 'document']:
+                    await message.reply_text("❌ Неверный тип ответа. Выберите: text, image или document:")
+                    return
+                
+                current_answers = context.user_data['dialog_data']['current_question']['answers']
+                current_answers[-1]['answer_type'] = answer_type
+                
+                context.user_data['action'] = 'creating_dialog_finish'
+                await message.reply_text(
+                    f"✅ Тип ответа: {answer_type}\n\n"
+                    "❓ Хотите добавить еще один ответ на этот вопрос?\n"
+                    "Отправьте 'да' или 'нет':",
+                    parse_mode="HTML"
+                )
+                return
+            
+            elif action == 'creating_dialog_finish':
+                response = text.strip().lower()
+                
+                if response in ['да', 'yes', 'y', 'добавить']:
+                    context.user_data['action'] = 'creating_dialog_answer'
+                    await message.reply_text(
+                        "💬 Отправьте следующий ответ на вопрос:",
+                        parse_mode="HTML"
+                    )
+                    return
+                
+                # Добавляем вопрос к диалогу
+                context.user_data['dialog_data']['questions'].append(context.user_data['dialog_data']['current_question'])
+                context.user_data['dialog_data']['current_question'] = None
+                
+                # Создаем диалог
+                try:
+                    async with get_db_session() as session:
+                        dialog_service = DialogService(session)
+                        
+                        dialog_data = DialogCreate(
+                            name=context.user_data['dialog_data']['name'],
+                            description=context.user_data['dialog_data']['description'],
+                            questions=[
+                                DialogQuestionCreate(
+                                    question_text=q['question_text'],
+                                    keywords=q['keywords'],
+                                    answers=[
+                                        DialogAnswerCreate(
+                                            answer_text=a['answer_text'],
+                                            answer_type=a['answer_type'],
+                                            additional_data=a['additional_data']
+                                        ) for a in q['answers']
+                                    ]
+                                ) for q in context.user_data['dialog_data']['questions']
+                            ]
+                        )
+                        
+                        dialog = await dialog_service.create_dialog(dialog_data)
+                        
+                        await message.reply_text(
+                            f"🎉 <b>Диалог успешно создан!</b>\n\n"
+                            f"📋 <b>Название:</b> {dialog.name}\n"
+                            f"📊 <b>Вопросов:</b> {len(dialog.questions)}\n"
+                            f"📊 <b>Ответов:</b> {sum(len(q.answers) for q in dialog.questions)}\n\n"
+                            f"✅ Диалог готов к использованию!",
+                            parse_mode="HTML"
+                        )
+                        
+                        context.user_data.pop('action', None)
+                        context.user_data.pop('dialog_data', None)
+                        
+                        logger.info(f"Админ {message.from_user.id} создал диалог: {dialog.name}")
+                        return
+                        
+                except Exception as dialog_error:
+                    logger.error(f"Ошибка создания диалога: {dialog_error}")
+                    await message.reply_text(
+                        "❌ Ошибка создания диалога. Попробуйте снова.",
+                        parse_mode="HTML"
+                    )
+                    context.user_data.pop('action', None)
+                    context.user_data.pop('dialog_data', None)
+                    return
+            
             return
         
         # Если это не админ или нет активного действия - проверяем диалоги
