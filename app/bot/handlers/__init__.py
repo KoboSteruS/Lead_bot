@@ -191,7 +191,7 @@ def register_handlers(application: Application) -> None:
     # Обработчики файлов и текста для админ-панели
     application.add_handler(file_handler)  # Обработчик файлов
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_input_handler))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, dialog_text_handler))  # Обработчик диалогов
+    # dialog_text_handler вызывается изнутри text_input_handler для обычных пользователей
 
 
 __all__ = [

@@ -385,8 +385,4 @@ async def _handle_creating_dialog_finish(update: Update, context: ContextTypes.D
         )
 
 
-# Создание обработчиков
-from telegram.ext import MessageHandler, filters
-
-dialog_text_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, dialog_text_handler)
-dialog_admin_text_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, dialog_admin_text_handler)
+# Обработчики экспортируются как функции, а MessageHandler создается в __init__.py

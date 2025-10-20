@@ -875,6 +875,12 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
             from .dialog_text import dialog_admin_text_handler
             await dialog_admin_text_handler(update, context)
             return
+        
+        # Если это не админ или нет активного действия - проверяем диалоги
+        if user.id not in settings.admin_ids_list or not action:
+            from .dialog_text import dialog_text_handler as dialog_handler_func
+            await dialog_handler_func(update, context)
+            return
             
     except Exception as e:
         logger.error(f"Ошибка обработки текстового ввода: {e}")
