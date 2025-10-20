@@ -46,6 +46,7 @@ async def admin_command_handler(update: Update, context: ContextTypes.DEFAULT_TY
         [InlineKeyboardButton("💰 Трипвайеры", callback_data="admin_products")],
         [InlineKeyboardButton("🔥 Прогрев", callback_data="admin_warmup")],
         [InlineKeyboardButton("📢 Рассылки", callback_data="admin_mailings")],
+        [InlineKeyboardButton("💬 Диалоги", callback_data="admin_dialogs")],
         [InlineKeyboardButton("👨‍💼 Администраторы", callback_data="admin_admins")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -326,6 +327,7 @@ async def admin_back_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
         [InlineKeyboardButton("💰 Трипвайеры", callback_data="admin_products")],
         [InlineKeyboardButton("🔥 Прогрев", callback_data="admin_warmup")],
         [InlineKeyboardButton("📢 Рассылки", callback_data="admin_mailings")],
+        [InlineKeyboardButton("💬 Диалоги", callback_data="admin_dialogs")],
         [InlineKeyboardButton("👨‍💼 Администраторы", callback_data="admin_admins")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)

@@ -80,6 +80,20 @@ from .admin_manage import (
     file_handler,
     file_input_handler
 )
+from .dialog_admin import (
+    admin_dialogs_callback,
+    create_dialog_callback,
+    edit_dialog_select_callback,
+    edit_dialog_callback,
+    delete_dialog_select_callback,
+    confirm_delete_dialog_callback,
+    execute_delete_dialog_callback,
+    dialog_stats_callback
+)
+from .dialog_text import (
+    dialog_text_handler,
+    dialog_admin_text_handler
+)
 
 
 def register_handlers(application: Application) -> None:
@@ -161,11 +175,23 @@ def register_handlers(application: Application) -> None:
     application.add_handler(admin_admins_callback)
     application.add_handler(add_admin_callback)
     application.add_handler(remove_admin_select_callback)
+    
+    # Диалоги
+    application.add_handler(admin_dialogs_callback)
+    application.add_handler(create_dialog_callback)
+    application.add_handler(edit_dialog_select_callback)
+    application.add_handler(edit_dialog_callback)
+    application.add_handler(delete_dialog_select_callback)
+    application.add_handler(confirm_delete_dialog_callback)
+    application.add_handler(execute_delete_dialog_callback)
+    application.add_handler(dialog_stats_callback)
+    
     application.add_handler(admin_text_handler)  # Должен быть последним!
     
     # Обработчики файлов и текста для админ-панели
     application.add_handler(file_handler)  # Обработчик файлов
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_input_handler))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, dialog_text_handler))  # Обработчик диалогов
 
 
 __all__ = [

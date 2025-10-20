@@ -10,6 +10,7 @@ from .telegram_service import TelegramService
 from .scheduler_service import SchedulerService
 from .followup_service import FollowUpService
 from .payment_service import PaymentService
+from .dialog_service import DialogService
 
 __all__ = [
     "UserService",
@@ -19,5 +20,6 @@ __all__ = [
     "TelegramService",
     "SchedulerService",
     "FollowUpService",
-    "PaymentService"
+    "PaymentService",
+    "DialogService"
 ]

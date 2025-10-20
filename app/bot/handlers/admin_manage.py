@@ -868,6 +868,13 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
                     parse_mode="HTML"
                 )
             return
+        
+        # Обработка создания диалогов - делегируем в dialog_text.py
+        if action and action.startswith('creating_dialog'):
+            # Перенаправляем в dialog_admin_text_handler
+            from .dialog_text import dialog_admin_text_handler
+            await dialog_admin_text_handler(update, context)
+            return
             
     except Exception as e:
         logger.error(f"Ошибка обработки текстового ввода: {e}")

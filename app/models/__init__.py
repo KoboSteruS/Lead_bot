@@ -13,6 +13,7 @@ from .warmup import (
 from .mailing import Mailing, MailingRecipient, MailingStatus
 from .user_followup import UserFollowUp
 from .admin import Admin
+from .dialog import Dialog, DialogQuestion, DialogAnswer, DialogStatus
 
 __all__ = [
     "BaseModel",
@@ -35,5 +36,9 @@ __all__ = [
     "MailingRecipient",
     "MailingStatus",
     "UserFollowUp",
-    "Admin"
+    "Admin",
+    "Dialog",
+    "DialogQuestion",
+    "DialogAnswer",
+    "DialogStatus"
 ]
