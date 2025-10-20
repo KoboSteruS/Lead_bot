@@ -5,6 +5,7 @@
 """
 
 from typing import Optional, List
+from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, and_, String
 from loguru import logger
