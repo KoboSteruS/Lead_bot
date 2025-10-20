@@ -56,3 +56,8 @@ class WarmupException(BaseException):
 class RitualException(BaseException):
     """Исключение для ошибок системы ритуалов."""
     pass
+
+
+class DialogException(BaseException):
+    """Исключение для ошибок системы диалогов."""
+    pass
