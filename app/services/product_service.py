@@ -449,10 +449,7 @@ class ProductService:
     async def update_product(self, product_id: str, **kwargs) -> bool:
         """Обновить продукт."""
         try:
-            # Конвертируем строку в UUID если нужно
-            if isinstance(product_id, str):
-                # product_id уже строка
-                
+            # product_id уже строка
             stmt = (
                 update(Product)
                 .where(Product.id == product_id)
