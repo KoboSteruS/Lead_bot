@@ -999,57 +999,64 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 context.user_data['dialog_data']['questions'].append(context.user_data['dialog_data']['current_question'])
                 context.user_data['dialog_data']['current_question'] = None
                 
-                # Создаем диалог
-                try:
-                    async with get_db_session() as session:
-                        dialog_service = DialogService(session)
-                        
-                        dialog_data = DialogCreate(
-                            name=context.user_data['dialog_data']['name'],
-                            description=context.user_data['dialog_data']['description'],
-                            questions=[
-                                DialogQuestionCreate(
-                                    question_text=q['question_text'],
-                                    keywords=q['keywords'],
-                                    answers=[
-                                        DialogAnswerCreate(
-                                            answer_text=a['answer_text'],
-                                            answer_type=a['answer_type'],
-                                            additional_data=a['additional_data']
-                                        ) for a in q['answers']
-                                    ]
-                                ) for q in context.user_data['dialog_data']['questions']
-                            ]
-                        )
-                        
-                        dialog = await dialog_service.create_dialog(dialog_data)
-                        
-                        await message.reply_text(
-                            f"🎉 <b>Диалог успешно создан!</b>\n\n"
-                            f"📋 <b>Название:</b> {dialog.name}\n"
-                            f"📊 <b>Вопросов:</b> {len(dialog.questions)}\n"
-                            f"📊 <b>Ответов:</b> {sum(len(q.answers) for q in dialog.questions)}\n\n"
-                            f"✅ Диалог готов к использованию!",
-                            parse_mode="HTML"
-                        )
-                        
-                        context.user_data.pop('action', None)
-                        context.user_data.pop('dialog_data', None)
-                        
-                        logger.info(f"Админ {message.from_user.id} создал диалог: {dialog.name}")
-                        return
-                        
-                except Exception as dialog_error:
-                    logger.error(f"Ошибка создания диалога: {dialog_error}")
-                    await message.reply_text(
-                        "❌ Ошибка создания диалога. Попробуйте снова.",
-                        parse_mode="HTML"
-                    )
-                    context.user_data.pop('action', None)
-                    context.user_data.pop('dialog_data', None)
-                    return
+                # Сохраняем флаг для создания диалога
+                context.user_data['action'] = 'create_dialog_now'
             
             return
+        
+        # Создание диалога - выносим на верхний уровень
+        if action == 'create_dialog_now':
+            try:
+                from app.services.dialog_service import DialogService
+                from app.schemas.dialog import DialogCreate, DialogQuestionCreate, DialogAnswerCreate
+                
+                async with get_db_session() as session:
+                    dialog_service = DialogService(session)
+                    
+                    dialog_data = DialogCreate(
+                        name=context.user_data['dialog_data']['name'],
+                        description=context.user_data['dialog_data']['description'],
+                        questions=[
+                            DialogQuestionCreate(
+                                question_text=q['question_text'],
+                                keywords=q['keywords'],
+                                answers=[
+                                    DialogAnswerCreate(
+                                        answer_text=a['answer_text'],
+                                        answer_type=a['answer_type'],
+                                        additional_data=a['additional_data']
+                                    ) for a in q['answers']
+                                ]
+                            ) for q in context.user_data['dialog_data']['questions']
+                        ]
+                    )
+                    
+                    dialog = await dialog_service.create_dialog(dialog_data)
+                    
+                    await message.reply_text(
+                        f"🎉 <b>Диалог успешно создан!</b>\n\n"
+                        f"📋 <b>Название:</b> {dialog.name}\n"
+                        f"📊 <b>Вопросов:</b> {len(dialog.questions)}\n"
+                        f"📊 <b>Ответов:</b> {sum(len(q.answers) for q in dialog.questions)}\n\n"
+                        f"✅ Диалог готов к использованию!",
+                        parse_mode="HTML"
+                    )
+                    
+                    context.user_data.pop('action', None)
+                    context.user_data.pop('dialog_data', None)
+                    
+                    logger.info(f"Админ {message.from_user.id} создал диалог: {dialog.name}")
+                    return
+                    
+            except Exception as dialog_error:
+                logger.error(f"Ошибка создания диалога: {dialog_error}")
+                await message.reply_text(
+                    "❌ Ошибка создания диалога. Попробуйте снова.",
+                    parse_mode="HTML"
+                )
+                context.user_data.pop('action', None)
+                context.user_data.pop('dialog_data', None)
+                return
         
         # Если это не админ или нет активного действия - проверяем диалоги
         if user.id not in settings.admin_ids_list or not action:
