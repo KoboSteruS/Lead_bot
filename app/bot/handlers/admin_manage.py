@@ -104,6 +104,9 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
     # Проверка админа
     from config.settings import settings
     if user.id not in settings.admin_ids_list:
+        # Если не админ - обрабатываем как диалог
+        from .dialog_text import dialog_text_handler as dialog_handler_func
+        await dialog_handler_func(update, context)
         return
     
     text = message.text
@@ -1058,11 +1061,6 @@ async def text_input_handler(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 context.user_data.pop('dialog_data', None)
                 return
         
-        # Если это не админ или нет активного действия - проверяем диалоги
-        if user.id not in settings.admin_ids_list or not action:
-            from .dialog_text import dialog_text_handler as dialog_handler_func
-            await dialog_handler_func(update, context)
-            return
             
     except Exception as e:
         logger.error(f"Ошибка обработки текстового ввода: {e}")
