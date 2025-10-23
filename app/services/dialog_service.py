@@ -231,8 +231,10 @@ class DialogService:
             search_results = []
             for question_data in question_results.values():
                 relevance_score = self._calculate_relevance(query, question_data['question'])
+                # Логируем все результаты для отладки
+                logger.info(f"Вопрос: '{question_data['question'].question_text}' | Релевантность: {relevance_score:.2f}")
                 # Повышаем порог релевантности - только значимые совпадения
-                if relevance_score >= 0.3:
+                if relevance_score >= 0.5:  # Еще выше порог
                     search_results.append(DialogSearchResult(
                         question=question_data['question'],
                         dialog=question_data['dialog'],
